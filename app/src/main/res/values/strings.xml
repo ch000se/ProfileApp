@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">ProfileApp</string>
+
+    <!-- Validation Errors -->
+    <string name="error_name_required">Ім\'я обов\'язкове</string>
+    <string name="error_name_too_short">Ім\'я має містити мінімум 2 символи</string>
+    <string name="error_surname_required">Прізвище обов\'язкове</string>
+    <string name="error_surname_too_short">Прізвище має містити мінімум 2 символи</string>
+    <string name="error_email_required">Email обов\'язковий</string>
+    <string name="error_email_invalid">Невірний формат email</string>
+    <string name="error_phone_required">Номер телефону обов\'язковий</string>
+    <string name="error_phone_invalid">Невірний формат (використовуйте +380XXXXXXXXX)</string>
+    <string name="error_date_required">Дата народження обов\'язкова</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Профіль</string>
+    <string name="profile_not_found">Профіль не знайдено</string>
+    <string name="edit_profile">Редагувати</string>
+    <string name="create_profile">Створити профіль</string>
+    <string name="name_label">Ім\'я</string>
+    <string name="surname_label">Прізвище</string>
+    <string name="email_label">Email</string>
+    <string name="phone_label">Телефон</string>
+    <string name="date_of_birthday_label">Дата народження</string>
+    <string name="save">Зберегти</string>
+    <string name="create">Створити</string>
+    <string name="select_photo">Обрати фото</string>
+    <string name="confirm">Підтвердити</string>
+    <string name="cancel">Скасувати</string>
+    <string name="phone_code">+380XXXXXXXXX</string>
+</resources>

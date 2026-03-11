@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.edit
+package com.ch000se.profileapp.presentation.screens.edit
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,9 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.presentation.edit.components.BirthDatePickerDialog
-import com.ch000se.profileapp.presentation.edit.components.EditProfileContentCompact
-import com.ch000se.profileapp.presentation.edit.components.EditProfileContentExpanded
+import com.ch000se.profileapp.presentation.screens.edit.components.BirthDatePickerDialog
+import com.ch000se.profileapp.presentation.screens.edit.components.EditProfileContentCompact
+import com.ch000se.profileapp.presentation.screens.edit.components.EditProfileContentExpanded
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

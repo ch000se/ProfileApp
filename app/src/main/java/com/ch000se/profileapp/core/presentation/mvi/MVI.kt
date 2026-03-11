@@ -77,3 +77,9 @@ fun <UiState, UiAction, SideEffect, T> T.onStart(
 ) where T : ViewModel, T : MVI<UiState, UiAction, SideEffect> {
     setup(scope = viewModelScope, initialAction = initialAction)
 }
+
+fun <UiState, UiAction, SideEffect, T> T.emitSideEffect(
+    effect: SideEffect
+) where T : ViewModel, T : MVI<UiState, UiAction, SideEffect> {
+    viewModelScope.emitSideEffect(effect)
+}

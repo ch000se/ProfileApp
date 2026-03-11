@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.edit.components
+package com.ch000se.profileapp.presentation.screens.edit.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ch000se.profileapp.presentation.edit.EditProfileUiAction
-import com.ch000se.profileapp.presentation.edit.EditProfileUiState
+import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiAction
+import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiState
 
 @Composable
 fun EditProfileContentCompact(
@@ -49,7 +49,7 @@ fun EditProfileContentCompact(
 
         SaveButton(
             isLoading = uiState.isLoading,
-            isEnabled = uiState.isValid,
+            isEnabled = uiState.isSaveButtonEnabled,
             isCreateMode = isCreateMode,
             onClick = { onAction(EditProfileUiAction.SaveProfile) },
             modifier = Modifier.fillMaxWidth()
@@ -103,7 +103,7 @@ fun EditProfileContentExpanded(
 
             SaveButton(
                 isLoading = uiState.isLoading,
-                isEnabled = uiState.isValid,
+                isEnabled = uiState.isSaveButtonEnabled,
                 isCreateMode = isCreateMode,
                 onClick = { onAction(EditProfileUiAction.SaveProfile) },
                 modifier = Modifier.fillMaxWidth()

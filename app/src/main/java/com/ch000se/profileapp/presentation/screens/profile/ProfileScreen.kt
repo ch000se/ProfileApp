@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.profile
+package com.ch000se.profileapp.presentation.screens.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,13 +24,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.presentation.profile.components.ProfileContent
+import com.ch000se.profileapp.presentation.screens.profile.components.ProfileContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     windowSize: WindowWidthSizeClass,
     onNavigateToEdit: () -> Unit,
+    onNavigateToCreate: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -39,6 +40,7 @@ fun ProfileScreen(
         viewModel.sideEffect.collect { effect ->
             when (effect) {
                 ProfileSideEffect.NavigateToEditProfile -> onNavigateToEdit()
+                ProfileSideEffect.NavigateToCreateProfile -> onNavigateToCreate()
             }
         }
     }

@@ -2,55 +2,64 @@ package com.ch000se.profileapp.presentation.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.ch000se.profileapp.presentation.edit.EditProfileScreen
-import com.ch000se.profileapp.presentation.profile.ProfileScreen
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
+import com.ch000se.profileapp.presentation.screens.edit.EditProfileScreen
+import com.ch000se.profileapp.presentation.screens.profile.ProfileScreen
 
 @Composable
 fun AppNavGraph(
     windowSize: WindowWidthSizeClass,
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.Profile
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = startDestination,
-        modifier = modifier
-    ) {
-        composable<Screen.Profile> {
-            ProfileScreen(
-                windowSize = windowSize,
-                onNavigateToEdit = {
-                    navController.navigate(Screen.EditProfile)
-                }
-            )
-        }
+    val backStack = rememberNavBackStack(Screen.Profile)
 
-        composable<Screen.CreateProfile> {
-            EditProfileScreen(
-                windowSize = windowSize,
-                isCreateMode = true,
-                onNavigateBack = {
-                    navController.navigate(Screen.Profile) {
-                        popUpTo(Screen.CreateProfile) { inclusive = true }
+    NavDisplay(
+        backStack = backStack,
+        onBack = {
+            backStack.removeLastOrNull()
+        },
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator()
+        ),
+        entryProvider = entryProvider {
+            entry<Screen.Profile> {
+                ProfileScreen(
+                    windowSize = windowSize,
+                    onNavigateToEdit = {
+                        backStack.add(Screen.EditProfile)
+                    },
+                    onNavigateToCreate = {
+                        backStack.removeLastOrNull()
+                        backStack.add(Screen.CreateProfile)
                     }
-                }
-            )
-        }
+                )
+            }
 
-        composable<Screen.EditProfile> {
-            EditProfileScreen(
-                windowSize = windowSize,
-                isCreateMode = false,
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
+            entry<Screen.CreateProfile> {
+                EditProfileScreen(
+                    windowSize = windowSize,
+                    isCreateMode = true,
+                    onNavigateBack = {
+                        backStack.removeLastOrNull()
+                        backStack.add(Screen.Profile)
+                    }
+                )
+            }
+
+            entry<Screen.EditProfile> {
+                EditProfileScreen(
+                    windowSize = windowSize,
+                    isCreateMode = false,
+                    onNavigateBack = {
+                        backStack.removeLastOrNull()
+                    }
+                )
+            }
         }
-    }
+    )
 }

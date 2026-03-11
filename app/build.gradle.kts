@@ -21,6 +21,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    composeCompiler{
+        reportsDestination = layout.buildDirectory.dir("reports")
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -63,7 +67,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
     implementation(libs.kotlinx.serialization.json)
 

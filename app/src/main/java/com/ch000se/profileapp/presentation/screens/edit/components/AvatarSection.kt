@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.edit.components
+package com.ch000se.profileapp.presentation.screens.edit.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

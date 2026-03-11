@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.edit
+package com.ch000se.profileapp.presentation.screens.edit
 
 import com.ch000se.profileapp.domain.validation.UserField
 import com.ch000se.profileapp.domain.validation.ValidationError
@@ -12,17 +12,9 @@ data class EditProfileUiState(
     val avatarUri: String = "",
     val validationErrors: Map<UserField, ValidationError> = emptyMap(),
     val isLoading: Boolean = false,
-    val isSaved: Boolean = false,
-    val showDatePicker: Boolean = false
-) {
-    val isValid: Boolean
-        get() = validationErrors.isEmpty() &&
-                name.isNotBlank() &&
-                surname.isNotBlank() &&
-                email.isNotBlank() &&
-                phone.isNotBlank() &&
-                dateOfBirthday.isNotBlank()
-}
+    val showDatePicker: Boolean = false,
+    val isSaveButtonEnabled: Boolean = false
+)
 
 sealed interface EditProfileUiAction {
     data object LoadUser : EditProfileUiAction
@@ -36,6 +28,7 @@ sealed interface EditProfileUiAction {
     data object ShowDatePicker : EditProfileUiAction
     data object HideDatePicker : EditProfileUiAction
     data object ShowImagePicker : EditProfileUiAction
+    data object ProfileScreen : EditProfileUiAction
 }
 
 sealed interface EditProfileSideEffect {

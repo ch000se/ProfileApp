@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.edit.components
+package com.ch000se.profileapp.presentation.screens.edit.components
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.ch000se.profileapp.R
 import java.util.Calendar
@@ -22,26 +23,26 @@ fun BirthDatePickerDialog(
     onDateSelected: (Long?) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-    val maxYear = currentYear - MIN_AGE
+    val currentYear = remember { Calendar.getInstance().get(Calendar.YEAR) }
     val minYear = currentYear - MAX_AGE
+    val maxYear = currentYear - MIN_AGE
 
-    val maxDateMillis = Calendar.getInstance().apply {
-        set(maxYear, Calendar.DECEMBER, 31)
-    }.timeInMillis
+    val initialDateMillis = remember(maxYear) {
+        Calendar.getInstance().apply {
+            set(maxYear, Calendar.JANUARY, 1)
+        }.timeInMillis
+    }
 
-    val minDateMillis = Calendar.getInstance().apply {
-        set(minYear, Calendar.JANUARY, 1)
-    }.timeInMillis
+    val selectableDates = remember(minYear, maxYear) {
+        object : SelectableDates {
+            private val minDateMillis = Calendar.getInstance().apply {
+                set(minYear, Calendar.JANUARY, 1)
+            }.timeInMillis
 
-    val initialDateMillis = Calendar.getInstance().apply {
-        set(maxYear, Calendar.JANUARY, 1)
-    }.timeInMillis
+            private val maxDateMillis = Calendar.getInstance().apply {
+                set(maxYear, Calendar.DECEMBER, 31)
+            }.timeInMillis
 
-    val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = initialDateMillis,
-        yearRange = minYear..maxYear,
-        selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                 return utcTimeMillis in minDateMillis..maxDateMillis
             }
@@ -50,6 +51,12 @@ fun BirthDatePickerDialog(
                 return year in minYear..maxYear
             }
         }
+    }
+
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = initialDateMillis,
+        yearRange = minYear..maxYear,
+        selectableDates = selectableDates
     )
 
     DatePickerDialog(

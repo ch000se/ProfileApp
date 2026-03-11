@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.profile.components
+package com.ch000se.profileapp.presentation.screens.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

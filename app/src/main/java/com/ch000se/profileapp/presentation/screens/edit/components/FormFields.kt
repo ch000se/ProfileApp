@@ -1,10 +1,9 @@
-package com.ch000se.profileapp.presentation.edit.components
+package com.ch000se.profileapp.presentation.screens.edit.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -24,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core.presentation.mapper.toMessage
 import com.ch000se.profileapp.domain.validation.UserField
-import com.ch000se.profileapp.presentation.edit.EditProfileUiAction
-import com.ch000se.profileapp.presentation.edit.EditProfileUiState
+import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiAction
+import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiState
 
 @Composable
 fun FormFields(
@@ -35,7 +34,10 @@ fun FormFields(
 ) {
     val context = LocalContext.current
 
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         OutlinedTextField(
             value = uiState.name,
             onValueChange = { onAction(EditProfileUiAction.UpdateName(it)) },
@@ -56,8 +58,6 @@ fun FormFields(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         OutlinedTextField(
             value = uiState.surname,
             onValueChange = { onAction(EditProfileUiAction.UpdateSurname(it)) },
@@ -77,8 +77,6 @@ fun FormFields(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
             value = uiState.email,
@@ -101,8 +99,6 @@ fun FormFields(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         OutlinedTextField(
             value = uiState.phone,
             onValueChange = { onAction(EditProfileUiAction.UpdatePhone(it)) },
@@ -124,8 +120,6 @@ fun FormFields(
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
             value = uiState.dateOfBirthday,

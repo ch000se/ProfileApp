@@ -24,7 +24,6 @@ class ProfileViewModel @Inject constructor(
         when (action) {
             ProfileUiAction.LoadUser -> loadUser()
             ProfileUiAction.EditProfile -> emitSideEffect(ProfileSideEffect.NavigateToEditProfile)
-            ProfileUiAction.CreateProfile -> emitSideEffect(ProfileSideEffect.NavigateToCreateProfile)
         }
     }
 
@@ -33,11 +32,7 @@ class ProfileViewModel @Inject constructor(
             updateUiState { copy(isLoading = true, error = null) }
             try {
                 val user = getUserUseCase()
-                if (user != null) {
-                    updateUiState { copy(isLoading = false, user = user) }
-                } else {
-                    onAction(ProfileUiAction.CreateProfile)
-                }
+                updateUiState { copy(isLoading = false, user = user) }
             } catch (e: Exception) {
                 updateUiState { copy(isLoading = false, error = e.message) }
             }

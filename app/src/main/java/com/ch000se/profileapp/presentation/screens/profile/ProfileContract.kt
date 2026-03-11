@@ -11,7 +11,6 @@ data class ProfileUiState(
 sealed interface ProfileUiAction {
     data object LoadUser : ProfileUiAction
     data object EditProfile : ProfileUiAction
-    data object CreateProfile : ProfileUiAction
 }
 
 sealed interface ProfileSideEffect {

@@ -14,8 +14,9 @@ import com.ch000se.profileapp.presentation.screens.profile.ProfileScreen
 @Composable
 fun AppNavGraph(
     windowSize: WindowWidthSizeClass,
+    startScreen: NavKey
 ) {
-    val backStack = rememberNavBackStack(Screen.Profile)
+    val backStack = rememberNavBackStack(startScreen)
 
     NavDisplay(
         backStack = backStack,

@@ -33,53 +33,78 @@ class EditProfileViewModel @Inject constructor(
         when (action) {
             EditProfileUiAction.LoadUser -> loadUser()
             is EditProfileUiAction.UpdateName -> updateUiState {
+                val validationErrors = updateValidationError(
+                    UserField.NAME,
+                    userValidator.validateName(action.value)
+                )
                 copy(
                     name = action.value,
-                    validationErrors = updateValidationError(
-                        UserField.NAME,
-                        userValidator.validateName(action.value)
+                    validationErrors = validationErrors,
+                    isSaveButtonEnabled = isDataValid(
+                        validationErrors = validationErrors,
+                        name = action.value
                     )
-                ).withUpdatedSaveButton()
+                )
             }
 
             is EditProfileUiAction.UpdateSurname -> updateUiState {
+                val validationErrors = updateValidationError(
+                    UserField.SURNAME,
+                    userValidator.validateSurname(action.value)
+                )
                 copy(
                     surname = action.value,
-                    validationErrors = updateValidationError(
-                        UserField.SURNAME,
-                        userValidator.validateSurname(action.value)
+                    validationErrors = validationErrors,
+                    isSaveButtonEnabled = isDataValid(
+                        validationErrors = validationErrors,
+                        surname = action.value
                     )
-                ).withUpdatedSaveButton()
+                )
             }
 
             is EditProfileUiAction.UpdatePhone -> updateUiState {
+                val validationErrors = updateValidationError(
+                    UserField.PHONE,
+                    userValidator.validatePhone(action.value)
+                )
                 copy(
                     phone = action.value,
-                    validationErrors = updateValidationError(
-                        UserField.PHONE,
-                        userValidator.validatePhone(action.value)
+                    validationErrors = validationErrors,
+                    isSaveButtonEnabled = isDataValid(
+                        validationErrors = validationErrors,
+                        phone = action.value
                     )
-                ).withUpdatedSaveButton()
+                )
             }
 
             is EditProfileUiAction.UpdateEmail -> updateUiState {
+                val validationErrors = updateValidationError(
+                    UserField.EMAIL,
+                    userValidator.validateEmail(action.value)
+                )
                 copy(
                     email = action.value,
-                    validationErrors = updateValidationError(
-                        UserField.EMAIL,
-                        userValidator.validateEmail(action.value)
+                    validationErrors = validationErrors,
+                    isSaveButtonEnabled = isDataValid(
+                        validationErrors = validationErrors,
+                        email = action.value
                     )
-                ).withUpdatedSaveButton()
+                )
             }
 
             is EditProfileUiAction.UpdateDateOfBirthday -> updateUiState {
+                val validationErrors = updateValidationError(
+                    UserField.DATE_OF_BIRTHDAY,
+                    userValidator.validateDateOfBirthday(action.value)
+                )
                 copy(
                     dateOfBirthday = action.value,
-                    validationErrors = updateValidationError(
-                        UserField.DATE_OF_BIRTHDAY,
-                        userValidator.validateDateOfBirthday(action.value)
+                    validationErrors = validationErrors,
+                    isSaveButtonEnabled = isDataValid(
+                        validationErrors = validationErrors,
+                        dateOfBirthday = action.value
                     )
-                ).withUpdatedSaveButton()
+                )
             }
 
             is EditProfileUiAction.UpdateAvatar -> updateUiState { copy(avatarUri = action.uri) }
@@ -94,14 +119,20 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-    private fun EditProfileUiState.withUpdatedSaveButton(): EditProfileUiState {
-        val isEnabled = validationErrors.isEmpty() &&
+    private fun isDataValid(
+        validationErrors: Map<UserField, ValidationError> = uiState.value.validationErrors,
+        name: String = uiState.value.name,
+        surname: String = uiState.value.surname,
+        email: String = uiState.value.email,
+        phone: String = uiState.value.phone,
+        dateOfBirthday: String = uiState.value.dateOfBirthday,
+    ): Boolean {
+        return validationErrors.isEmpty() &&
                 name.isNotBlank() &&
                 surname.isNotBlank() &&
                 email.isNotBlank() &&
                 phone.isNotBlank() &&
                 dateOfBirthday.isNotBlank()
-        return copy(isSaveButtonEnabled = isEnabled)
     }
 
     private fun EditProfileUiState.updateValidationError(
@@ -126,7 +157,7 @@ class EditProfileViewModel @Inject constructor(
                         email = user.email,
                         dateOfBirthday = user.dateOfBirthday,
                         avatarUri = user.avatar
-                    ).withUpdatedSaveButton()
+                    )
                 }
             }
         }
@@ -158,7 +189,7 @@ class EditProfileViewModel @Inject constructor(
                         copy(
                             isLoading = false,
                             validationErrors = result.errors
-                        ).withUpdatedSaveButton()
+                        )
                     }
                 }
             }

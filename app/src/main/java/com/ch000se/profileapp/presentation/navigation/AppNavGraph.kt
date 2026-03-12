@@ -2,12 +2,15 @@ package com.ch000se.profileapp.presentation.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.ch000se.profileapp.presentation.screens.addcontact.AddContactScreen
+import com.ch000se.profileapp.presentation.screens.contacts.ContactsScreen
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileScreen
 import com.ch000se.profileapp.presentation.screens.profile.ProfileScreen
 
@@ -20,8 +23,8 @@ fun AppNavGraph(
 
     NavDisplay(
         backStack = backStack,
-        onBack = {
-            backStack.removeLastOrNull()
+        onBack = dropUnlessResumed {
+            if (backStack.size > 1) backStack.removeLastOrNull()
         },
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
@@ -31,12 +34,11 @@ fun AppNavGraph(
             entry<Screen.Profile> {
                 ProfileScreen(
                     windowSize = windowSize,
-                    onNavigateToEdit = {
+                    onNavigateToEdit = dropUnlessResumed {
                         backStack.add(Screen.EditProfile)
                     },
-                    onNavigateToCreate = {
-                        backStack.removeLastOrNull()
-                        backStack.add(Screen.CreateProfile)
+                    onNavigateToContacts = dropUnlessResumed {
+                        backStack.add(Screen.Contacts)
                     }
                 )
             }
@@ -45,7 +47,7 @@ fun AppNavGraph(
                 EditProfileScreen(
                     windowSize = windowSize,
                     isCreateMode = true,
-                    onNavigateBack = {
+                    onNavigateBack = dropUnlessResumed {
                         backStack.removeLastOrNull()
                         backStack.add(Screen.Profile)
                     }
@@ -56,8 +58,30 @@ fun AppNavGraph(
                 EditProfileScreen(
                     windowSize = windowSize,
                     isCreateMode = false,
-                    onNavigateBack = {
-                        backStack.removeLastOrNull()
+                    onNavigateBack = dropUnlessResumed {
+                        if (backStack.size > 1) backStack.removeLastOrNull()
+                    }
+                )
+            }
+
+            entry<Screen.Contacts> {
+                ContactsScreen(
+                    onNavigateToAddContact = dropUnlessResumed {
+                        backStack.add(Screen.AddContact)
+                    },
+                    onNavigateBack = dropUnlessResumed {
+                        if (backStack.size > 1) backStack.removeLastOrNull()
+                    },
+                    onNavigateToContactDetail = {
+                        // Реалізація пізніше
+                    },
+                )
+            }
+
+            entry<Screen.AddContact> {
+                AddContactScreen(
+                    onNavigateBack = dropUnlessResumed {
+                        if (backStack.size > 1) backStack.removeLastOrNull()
                     }
                 )
             }

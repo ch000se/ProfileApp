@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,7 +33,7 @@ import com.ch000se.profileapp.presentation.screens.profile.components.ProfileCon
 fun ProfileScreen(
     windowSize: WindowWidthSizeClass,
     onNavigateToEdit: () -> Unit,
-    onNavigateToCreate: () -> Unit,
+    onNavigateToContacts: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -40,7 +42,6 @@ fun ProfileScreen(
         viewModel.sideEffect.collect { effect ->
             when (effect) {
                 ProfileSideEffect.NavigateToEditProfile -> onNavigateToEdit()
-                ProfileSideEffect.NavigateToCreateProfile -> onNavigateToCreate()
             }
         }
     }
@@ -49,6 +50,14 @@ fun ProfileScreen(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.profile_title)) },
+                actions = {
+                    IconButton(onClick = onNavigateToContacts) {
+                        Icon(
+                            imageVector = Icons.Default.Contacts,
+                            contentDescription = stringResource(R.string.contacts_title)
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer

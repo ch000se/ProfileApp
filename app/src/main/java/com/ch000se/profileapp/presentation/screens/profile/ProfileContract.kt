@@ -15,5 +15,4 @@ sealed interface ProfileUiAction {
 
 sealed interface ProfileSideEffect {
     data object NavigateToEditProfile : ProfileSideEffect
-    data object NavigateToCreateProfile : ProfileSideEffect
 }

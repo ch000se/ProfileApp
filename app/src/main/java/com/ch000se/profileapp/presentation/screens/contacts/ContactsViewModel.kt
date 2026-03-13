@@ -10,6 +10,8 @@ import com.ch000se.profileapp.domain.usecases.DeleteContactUseCase
 import com.ch000se.profileapp.domain.usecases.GetContactsUseCase
 import com.ch000se.profileapp.presentation.screens.contacts.ContactsSideEffect.NavigateToContactDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +21,7 @@ class ContactsViewModel @Inject constructor(
     private val deleteContactUseCase: DeleteContactUseCase
 ) : ViewModel(),
     MVI<ContactsUiState, ContactsUiAction, ContactsSideEffect> by mvi(ContactsUiState()) {
+    private var loadContactsJob: Job? = null
 
     init {
         onStart { onAction(ContactsUiAction.LoadContacts) }
@@ -33,13 +36,17 @@ class ContactsViewModel @Inject constructor(
                     action.contact
                 )
             )
+
             ContactsUiAction.LoadContacts -> loadContacts()
         }
     }
 
     private fun loadContacts() {
-        viewModelScope.launch {
+        if (loadContactsJob?.isActive == true) return
+
+        loadContactsJob = viewModelScope.launch {
             getContactsUseCase()
+                .catch { e -> updateUiState { copy(isLoading = false, error = e.message) } }
                 .collect { contacts ->
                     updateUiState { copy(contacts = contacts, isLoading = false, error = null) }
                 }
@@ -48,10 +55,13 @@ class ContactsViewModel @Inject constructor(
 
     private fun deleteContact(contactId: String) {
         viewModelScope.launch {
+            updateUiState { copy(isLoading = true) }
             try {
                 deleteContactUseCase(contactId)
             } catch (e: Exception) {
                 updateUiState { copy(error = e.message) }
+            } finally {
+                updateUiState { copy(isLoading = false) }
             }
         }
     }

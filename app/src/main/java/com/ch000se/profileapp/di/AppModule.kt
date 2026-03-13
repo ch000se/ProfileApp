@@ -45,7 +45,7 @@ interface AppModule {
                 context,
                 AppDatabase::class.java,
                 "profile_database"
-            ).fallbackToDestructiveMigration().build()
+            ).fallbackToDestructiveMigration(false).build()
         }
 
         @Provides

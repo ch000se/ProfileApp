@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.screens.profile.components
+package com.ch000se.profileapp.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

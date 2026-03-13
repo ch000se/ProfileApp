@@ -1,4 +1,4 @@
-package com.ch000se.profileapp.presentation.screens.profile.components
+package com.ch000se.profileapp.presentation.screens.contactDetail.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,30 +28,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.domain.model.User
+import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.core.presentation.components.ProfileAvatar
 import com.ch000se.profileapp.core.presentation.components.ProfileInfoItem
 
 @Composable
-fun ProfileContent(
-    user: User,
+fun ContactDetailContent(
+    contact: Contact,
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier
 ) {
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {
-            ProfileContentCompact(user = user, modifier = modifier)
+            ContactDetailContentCompact(contact = contact, modifier = modifier)
         }
 
         else -> {
-            ProfileContentExpanded(user = user, modifier = modifier)
+            ContactDetailContentExpanded(contact = contact, modifier = modifier)
         }
     }
 }
 
 @Composable
-fun ProfileContentCompact(
-    user: User,
+fun ContactDetailContentCompact(
+    contact: Contact,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -62,12 +62,12 @@ fun ProfileContentCompact(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        ProfileAvatar(avatarUri = user.avatar, size = 140)
+        ProfileAvatar(avatarUri = contact.avatar, size = 140)
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "${user.name} ${user.surname}",
+            text = "${contact.name} ${contact.surname}",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -85,7 +85,7 @@ fun ProfileContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.Email,
                     label = stringResource(R.string.email_label),
-                    value = user.email
+                    value = contact.email
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -93,7 +93,7 @@ fun ProfileContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.Phone,
                     label = stringResource(R.string.phone_label),
-                    value = user.phone
+                    value = contact.phone
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -101,7 +101,7 @@ fun ProfileContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.DateRange,
                     label = stringResource(R.string.date_of_birthday_label),
-                    value = user.dateOfBirthday
+                    value = contact.dateOfBirthday
                 )
             }
         }
@@ -109,8 +109,8 @@ fun ProfileContentCompact(
 }
 
 @Composable
-fun ProfileContentExpanded(
-    user: User,
+fun ContactDetailContentExpanded(
+    contact: Contact,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -128,12 +128,12 @@ fun ProfileContentExpanded(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            ProfileAvatar(avatarUri = user.avatar, size = 180)
+            ProfileAvatar(avatarUri = contact.avatar, size = 180)
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "${user.name} ${user.surname}",
+                text = "${contact.name} ${contact.surname}",
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -157,7 +157,7 @@ fun ProfileContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.Email,
                     label = stringResource(R.string.email_label),
-                    value = user.email
+                    value = contact.email
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -165,7 +165,7 @@ fun ProfileContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.Phone,
                     label = stringResource(R.string.phone_label),
-                    value = user.phone
+                    value = contact.phone
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -173,7 +173,7 @@ fun ProfileContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.DateRange,
                     label = stringResource(R.string.date_of_birthday_label),
-                    value = user.dateOfBirthday
+                    value = contact.dateOfBirthday
                 )
             }
         }

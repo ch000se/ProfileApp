@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -29,15 +27,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.presentation.screens.contacts.components.ContactItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactsScreen(
     onNavigateToAddContact: () -> Unit,
-    onNavigateToContactDetail: (Contact) -> Unit,
+    onNavigateToContactDetail: (String) -> Unit,
     onNavigateBack: () -> Unit,
     viewModel: ContactsViewModel = hiltViewModel()
 ) {
@@ -47,7 +46,7 @@ fun ContactsScreen(
         viewModel.sideEffect.collect { effect ->
             when (effect) {
                 ContactsSideEffect.NavigateToAddContact -> onNavigateToAddContact()
-                is ContactsSideEffect.NavigateToContactDetail -> onNavigateToContactDetail(effect.contact)
+                is ContactsSideEffect.NavigateToContactDetail -> onNavigateToContactDetail(effect.contact.id)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.ch000se.profileapp.data.repository
 
 import com.ch000se.ninjauser.data.remote.RandomUserApi
 import com.ch000se.profileapp.data.local.dao.ContactDao
+import com.ch000se.profileapp.data.mapper.toDomainFromEntity
 import com.ch000se.profileapp.data.mapper.toDomainListFromDto
 import com.ch000se.profileapp.data.mapper.toDomainListFromEntities
 import com.ch000se.profileapp.data.mapper.toEntity
@@ -20,6 +21,10 @@ class ContactRepositoryImpl @Inject constructor(
         return contactDao.getAllContacts().map { entities ->
             entities.toDomainListFromEntities()
         }
+    }
+
+    override suspend fun getContactById(contactId: String): Contact {
+        return contactDao.getContactById(contactId).toDomainFromEntity()
     }
 
     override suspend fun addContact(contact: Contact): Long {

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetRandomUsersUseCase @Inject constructor(
     private val contactRepository: ContactRepository
 ) {
-    suspend operator fun invoke(count: Int = 10): Result<List<Contact>> {
+    suspend operator fun invoke(count: Int): Result<List<Contact>> {
         return contactRepository.getRandomUsers(count)
     }
 }

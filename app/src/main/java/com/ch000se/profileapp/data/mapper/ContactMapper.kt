@@ -5,7 +5,7 @@ import com.ch000se.profileapp.data.remote.dto.UserDto
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 
-fun ContactEntity.toDomain(): Contact = Contact(
+fun ContactEntity.toDomainFromEntity(): Contact = Contact(
     id = id,
     name = name,
     surname = surname,
@@ -29,7 +29,7 @@ fun Contact.toEntity(): ContactEntity = ContactEntity(
     categories = categories.joinToString(",") { it.name }
 )
 
-fun UserDto.toDomain(): Contact = Contact(
+fun UserDto.toDomainFromDto(): Contact = Contact(
     id = id,
     name = name,
     surname = surname,
@@ -41,5 +41,5 @@ fun UserDto.toDomain(): Contact = Contact(
 )
 
 
-fun List<ContactEntity>.toDomainListFromEntities(): List<Contact> = map { it.toDomain() }
-fun List<UserDto>.toDomainListFromDto(): List<Contact> = map { it.toDomain() }
+fun List<ContactEntity>.toDomainListFromEntities(): List<Contact> = map { it.toDomainFromEntity() }
+fun List<UserDto>.toDomainListFromDto(): List<Contact> = map { it.toDomainFromDto() }

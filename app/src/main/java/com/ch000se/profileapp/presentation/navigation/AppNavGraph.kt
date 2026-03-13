@@ -10,6 +10,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactScreen
+import com.ch000se.profileapp.presentation.screens.contactDetail.ContactDetailScreen
 import com.ch000se.profileapp.presentation.screens.contacts.ContactsScreen
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileScreen
 import com.ch000se.profileapp.presentation.screens.profile.ProfileScreen
@@ -72,14 +73,25 @@ fun AppNavGraph(
                     onNavigateBack = dropUnlessResumed {
                         if (backStack.size > 1) backStack.removeLastOrNull()
                     },
-                    onNavigateToContactDetail = {
-                        // Реалізація пізніше
+                    onNavigateToContactDetail = { contactId ->
+                        backStack.add(Screen.ContactDetails(contactId))
                     },
                 )
             }
 
             entry<Screen.AddContact> {
                 AddContactScreen(
+                    windowSize = windowSize,
+                    onNavigateBack = dropUnlessResumed {
+                        if (backStack.size > 1) backStack.removeLastOrNull()
+                    }
+                )
+            }
+
+            entry<Screen.ContactDetails> { contact ->
+                ContactDetailScreen(
+                    windowSize = windowSize,
+                    contactId = contact.contactId,
                     onNavigateBack = dropUnlessResumed {
                         if (backStack.size > 1) backStack.removeLastOrNull()
                     }

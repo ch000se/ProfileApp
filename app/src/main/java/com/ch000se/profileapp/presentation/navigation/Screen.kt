@@ -20,4 +20,7 @@ sealed interface Screen : NavKey {
 
     @Serializable
     data object AddContact : Screen
+
+    @Serializable
+    data class ContactDetails(val contactId: String) : Screen
 }

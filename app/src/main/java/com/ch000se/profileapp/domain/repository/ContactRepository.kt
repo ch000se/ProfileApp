@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
     fun getAllContacts(): Flow<List<Contact>>
+    suspend fun getContactById(contactId: String): Contact
     suspend fun addContact(contact: Contact): Long
     suspend fun deleteContact(contactId: String)
     suspend fun getRandomUsers(count: Int = 10): Result<List<Contact>>

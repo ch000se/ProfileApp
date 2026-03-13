@@ -6,6 +6,7 @@ import com.ch000se.profileapp.domain.model.ContactCategory
 
 data class AddContactUiState(
     val isLoading: Boolean = true,
+    val isLoadingMore: Boolean = false,
     val isSaving: Boolean = false,
     val randomUsers: List<Contact> = emptyList(),
     val selectedUser: Contact? = null,
@@ -15,6 +16,7 @@ data class AddContactUiState(
 
 sealed interface AddContactUiAction {
     data object LoadRandomUsers : AddContactUiAction
+    data object LoadMoreUsers : AddContactUiAction
     data object RefreshUsers : AddContactUiAction
     data class SelectUser(val user: Contact) : AddContactUiAction
     data class ToggleCategory(val category: ContactCategory) : AddContactUiAction

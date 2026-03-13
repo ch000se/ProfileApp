@@ -23,9 +23,6 @@ class ContactsViewModel @Inject constructor(
     MVI<ContactsUiState, ContactsUiAction, ContactsSideEffect> by mvi(ContactsUiState()) {
     private var loadContactsJob: Job? = null
 
-    init {
-        onStart { onAction(ContactsUiAction.LoadContacts) }
-    }
 
     override fun onAction(action: ContactsUiAction) {
         when (action) {
@@ -38,12 +35,12 @@ class ContactsViewModel @Inject constructor(
             )
 
             ContactsUiAction.LoadContacts -> loadContacts()
+            ContactsUiAction.StopContacts -> stopContacts()
         }
     }
 
     private fun loadContacts() {
         if (loadContactsJob?.isActive == true) return
-
         loadContactsJob = viewModelScope.launch {
             getContactsUseCase()
                 .catch { e -> updateUiState { copy(isLoading = false, error = e.message) } }
@@ -51,6 +48,11 @@ class ContactsViewModel @Inject constructor(
                     updateUiState { copy(contacts = contacts, isLoading = false, error = null) }
                 }
         }
+    }
+
+    private fun stopContacts() {
+        loadContactsJob?.cancel()
+        loadContactsJob = null
     }
 
     private fun deleteContact(contactId: String) {

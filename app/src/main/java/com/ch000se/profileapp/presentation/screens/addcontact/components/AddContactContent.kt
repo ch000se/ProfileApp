@@ -99,9 +99,7 @@ fun AddContactContentCompact(
             Button(
                 onClick = { onAction(AddContactUiAction.SaveContact) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = uiState.selectedUser != null &&
-                        uiState.selectedCategories.isNotEmpty() &&
-                        !uiState.isSaving
+                enabled = uiState.isButtonEnabled
             ) {
                 if (uiState.isSaving) {
                     CircularProgressIndicator(
@@ -167,9 +165,7 @@ fun AddContentExpanded(
             Button(
                 onClick = { onAction(AddContactUiAction.SaveContact) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = uiState.selectedUser != null &&
-                        uiState.selectedCategories.isNotEmpty() &&
-                        !uiState.isSaving
+                enabled = uiState.isButtonEnabled
             ) {
                 Text(stringResource(R.string.save_contact))
             }

@@ -108,7 +108,7 @@ fun AddContactScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = uiState.error?.asString(context) ?: "",
+                            text = uiState.error?.asString() ?: "",
                             color = MaterialTheme.colorScheme.error
                         )
                         Spacer(modifier = Modifier.height(8.dp))

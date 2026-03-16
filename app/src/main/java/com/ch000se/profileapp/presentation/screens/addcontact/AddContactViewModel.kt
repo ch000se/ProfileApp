@@ -10,7 +10,6 @@ import com.ch000se.profileapp.core.presentation.mvi.onStart
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.domain.usecases.AddContactUseCase
-import com.ch000se.profileapp.domain.usecases.GetContactsUseCase
 import com.ch000se.profileapp.domain.usecases.GetRandomUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -96,41 +95,72 @@ class AddContactViewModel @Inject constructor(
         }
     }
 
+
+    private fun isButtonEnabled(state: AddContactUiState): Boolean {
+        val hasSelectedUser = state.randomUsers.any { it.isSelected }
+        val hasSelectedCategory = state.categories.any { it.isSelected }
+
+        return hasSelectedUser && hasSelectedCategory && !state.isSaving
+    }
+
     private fun selectUser(user: Contact) {
         updateUiState {
-            copy(
-                randomUsers = randomUsers.map { selectable ->
-                    selectable.copy(isSelected = selectable.data == user)
-                }
+            val newUsers = randomUsers.map {
+                it.copy(isSelected = it.data == user)
+            }
+
+            val newState = copy(randomUsers = newUsers)
+
+            newState.copy(
+                isButtonEnabled = isButtonEnabled(newState)
             )
         }
     }
 
     private fun toggleCategory(category: ContactCategory) {
         updateUiState {
-            copy(
-                categories = categories.map { item ->
-                    if (item.category == category) item.copy(isSelected = !item.isSelected)
-                    else item
-                }
+            val newCategories = categories.map {
+                if (it.category == category)
+                    it.copy(isSelected = !it.isSelected)
+                else it
+            }
+
+            val newState = copy(categories = newCategories)
+
+            newState.copy(
+                isButtonEnabled = isButtonEnabled(newState)
             )
         }
     }
 
     private fun saveContact() {
         val state = uiState.value
-        val selectedUser = state.selectedUser ?: return
-        if (state.selectedCategories.isEmpty()) return
+
+        val selectedUser = state.randomUsers
+            .firstOrNull { it.isSelected }?.data ?: return
+
+        val selectedCategories = state.categories
+            .filter { it.isSelected }
+            .map { it.category }
+
+        if (selectedCategories.isEmpty()) return
 
         viewModelScope.launch {
-            updateUiState { copy(isSaving = true) }
+            updateUiState { copy(isSaving = true, isButtonEnabled = false) }
+
             try {
-                val contact = selectedUser.copy(categories = state.selectedCategories)
+                val contact = selectedUser.copy(categories = selectedCategories)
                 addContactUseCase(contact)
+
                 updateUiState { copy(isSaving = false) }
+
                 emitSideEffect(AddContactSideEffect.NavigateBack)
             } catch (e: Exception) {
-                updateUiState { copy(isSaving = false) }
+                updateUiState {
+                    val newState = copy(isSaving = false)
+                    newState.copy(isButtonEnabled = isButtonEnabled(newState))
+                }
+
                 emitSideEffect(AddContactSideEffect.ShowError(e.toNetworkError()))
             }
         }

@@ -13,11 +13,6 @@ data class Selectable<T>(
 sealed interface UiText {
     data class StringResource(val resId: Int) : UiText
     data class DynamicString(val value: String) : UiText
-
-    fun asString(context: Context): String = when (this) {
-        is StringResource -> context.getString(resId)
-        is DynamicString -> value
-    }
 }
 
 data class CategoryUiModel(
@@ -30,16 +25,11 @@ data class AddContactUiState(
     val isLoading: Boolean = true,
     val isLoadingMore: Boolean = false,
     val isSaving: Boolean = false,
+    val isButtonEnabled: Boolean = false,
     val randomUsers: List<Selectable<Contact>> = emptyList(),
     val categories: List<CategoryUiModel> = emptyList(),
     val error: NetworkError? = null
-) {
-    val selectedUser: Contact?
-        get() = randomUsers.firstOrNull { it.isSelected }?.data
-    val selectedCategories: List<ContactCategory>
-        get() = categories.filter { it.isSelected }.map { it.category }
-
-}
+)
 
 sealed interface AddContactUiAction {
     data object LoadRandomUsers : AddContactUiAction

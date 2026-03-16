@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.core.presentation.mapper.asString
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.presentation.screens.addcontact.CategoryUiModel
 
@@ -40,7 +41,7 @@ fun CategorySelector(
                     FilterChip(
                         selected = item.isSelected,
                         onClick = { onCategoryToggle(item.category) },
-                        label = { Text(text = item.label.asString(context)) },
+                        label = { Text(text = item.label.asString()) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = when (item.category) {
                                 ContactCategory.FAMILY -> MaterialTheme.colorScheme.tertiaryContainer

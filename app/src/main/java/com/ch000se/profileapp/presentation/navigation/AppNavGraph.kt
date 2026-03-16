@@ -50,7 +50,7 @@ fun AppNavGraph(
                     isCreateMode = true,
                     onNavigateBack = dropUnlessResumed {
                         backStack.removeLastOrNull()
-                        backStack.add(Screen.Profile)
+                        backStack.add(Screen.Contacts)
                     }
                 )
             }

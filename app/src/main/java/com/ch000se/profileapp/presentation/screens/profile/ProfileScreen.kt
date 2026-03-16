@@ -24,8 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.presentation.screens.contacts.ContactsUiAction
 import com.ch000se.profileapp.presentation.screens.profile.components.ProfileContent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,9 +40,12 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-
-
+    LifecycleStartEffect(key1 = lifecycleOwner) {
+        viewModel.onAction(ProfileUiAction.LoadUser)
+        onStopOrDispose {}
+    }
     Scaffold(
         topBar = {
             TopAppBar(

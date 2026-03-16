@@ -15,10 +15,6 @@ class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase
 ) : ViewModel(), MVI<ProfileUiState, ProfileUiAction, Nothing> by mvi(ProfileUiState()) {
 
-    init {
-        onStart { onAction(ProfileUiAction.LoadUser) }
-    }
-
     override fun onAction(action: ProfileUiAction) {
         when (action) {
             ProfileUiAction.LoadUser -> loadUser()

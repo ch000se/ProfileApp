@@ -1,23 +1,12 @@
 package com.ch000se.profileapp.presentation.screens.addcontact
 
-import android.content.Context
 import com.ch000se.profileapp.core.domain.mapper.NetworkError
+import com.ch000se.profileapp.core.presentation.model.CategoryUiModel
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 
 data class Selectable<T>(
     val data: T,
-    val isSelected: Boolean = false
-)
-
-sealed interface UiText {
-    data class StringResource(val resId: Int) : UiText
-    data class DynamicString(val value: String) : UiText
-}
-
-data class CategoryUiModel(
-    val category: ContactCategory,
-    val label: UiText,
     val isSelected: Boolean = false
 )
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddContactUseCase @Inject constructor(
     private val contactRepository: ContactRepository
 ) {
-    suspend operator fun invoke(contact: Contact): Long {
+    suspend operator fun invoke(contact: Contact) {
         return contactRepository.addContact(contact)
     }
 }

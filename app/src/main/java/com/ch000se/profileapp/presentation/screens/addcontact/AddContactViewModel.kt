@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core.domain.mapper.toNetworkError
+import com.ch000se.profileapp.core.presentation.model.CategoryUiModel
+import com.ch000se.profileapp.core.presentation.model.UiText
 import com.ch000se.profileapp.core.presentation.mvi.MVI
 import com.ch000se.profileapp.core.presentation.mvi.mvi
 import com.ch000se.profileapp.core.presentation.mvi.onStart

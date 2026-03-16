@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.ch000se.ninjauser.data.remote.RandomUserApi
 import com.ch000se.profileapp.data.local.AppDatabase
 import com.ch000se.profileapp.data.local.MIGRATION_4_5
+import com.ch000se.profileapp.data.local.MIGRATION_5_6
 import com.ch000se.profileapp.data.remote.interceptor.AuthInterceptor
 import com.ch000se.profileapp.data.repository.ContactRepositoryImpl
 import com.ch000se.profileapp.data.repository.UserRepositoryImpl
@@ -46,7 +47,7 @@ interface AppModule {
                 context,
                 AppDatabase::class.java,
                 "profile_database"
-            ).addMigrations(MIGRATION_4_5).build()
+            ).addMigrations(MIGRATION_4_5, MIGRATION_5_6).build()
         }
 
         @Provides

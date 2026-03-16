@@ -2,7 +2,7 @@ package com.ch000se.profileapp.core.presentation.mapper
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.ch000se.profileapp.presentation.screens.addcontact.UiText
+import com.ch000se.profileapp.core.presentation.model.UiText
 
 @Composable
 fun UiText.asString(): String = when (this) {

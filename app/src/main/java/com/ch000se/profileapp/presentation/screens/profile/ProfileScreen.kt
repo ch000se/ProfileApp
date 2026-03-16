@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +27,6 @@ import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.presentation.screens.contacts.ContactsUiAction
 import com.ch000se.profileapp.presentation.screens.profile.components.ProfileContent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,6 +44,7 @@ fun ProfileScreen(
         viewModel.onAction(ProfileUiAction.LoadUser)
         onStopOrDispose {}
     }
+
     Scaffold(
         topBar = {
             TopAppBar(

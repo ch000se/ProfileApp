@@ -20,7 +20,5 @@ data class ContactEntity(
     @ColumnInfo(name = "date_of_birthday")
     val dateOfBirthday: String,
     @ColumnInfo(name = "avatar_uri")
-    val avatarUri: String,
-    @ColumnInfo(name = "categories")
-    val categories: String
+    val avatarUri: String
 )

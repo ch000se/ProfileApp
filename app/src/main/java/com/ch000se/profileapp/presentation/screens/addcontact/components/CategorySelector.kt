@@ -11,13 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core.presentation.mapper.asString
+import com.ch000se.profileapp.core.presentation.model.CategoryUiModel
 import com.ch000se.profileapp.domain.model.ContactCategory
-import com.ch000se.profileapp.presentation.screens.addcontact.CategoryUiModel
 
 @Composable
 fun CategorySelector(
@@ -25,7 +24,6 @@ fun CategorySelector(
     onCategoryToggle: (ContactCategory) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
 
     Column(modifier = modifier.fillMaxWidth()) {
         Text(

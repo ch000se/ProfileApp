@@ -38,8 +38,8 @@ fun AppNavGraph(
                     onNavigateToEdit = dropUnlessResumed {
                         backStack.add(Screen.EditProfile)
                     },
-                    onNavigateToContacts = dropUnlessResumed {
-                        backStack.add(Screen.Contacts)
+                    onNavigateBack = dropUnlessResumed {
+                        if (backStack.size > 1) backStack.removeLastOrNull()
                     }
                 )
             }
@@ -70,8 +70,8 @@ fun AppNavGraph(
                     onNavigateToAddContact = dropUnlessResumed {
                         backStack.add(Screen.AddContact)
                     },
-                    onNavigateBack = dropUnlessResumed {
-                        if (backStack.size > 1) backStack.removeLastOrNull()
+                    onNavigateToProfile = dropUnlessResumed {
+                        backStack.add(Screen.Profile)
                     },
                     onNavigateToContactDetail = { contactId ->
                         if (backStack.last() is Screen.Contacts) {

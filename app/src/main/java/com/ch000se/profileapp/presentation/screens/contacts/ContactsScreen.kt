@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -38,7 +40,7 @@ import com.ch000se.profileapp.presentation.screens.contacts.components.ContactIt
 fun ContactsScreen(
     onNavigateToAddContact: () -> Unit,
     onNavigateToContactDetail: (String) -> Unit,
-    onNavigateBack: () -> Unit,
+    onNavigateToProfile: () -> Unit,
     viewModel: ContactsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -56,11 +58,11 @@ fun ContactsScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                actions = {
+                    IconButton(onClick = onNavigateToProfile) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
+                            imageVector = Icons.Default.Person,
+                            contentDescription = null
                         )
                     }
                 }

@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
 
                         is MainUiState.Ready -> {
                             val startScreen = if (currentState.isUserExist) {
-                                Screen.Profile
+                                Screen.Contacts
                             } else {
                                 Screen.CreateProfile
                             }

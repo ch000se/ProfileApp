@@ -3,7 +3,6 @@ package com.ch000se.profileapp.presentation.screens.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch000se.profileapp.core.presentation.mvi.MVI
-import com.ch000se.profileapp.core.presentation.mvi.emitSideEffect
 import com.ch000se.profileapp.core.presentation.mvi.mvi
 import com.ch000se.profileapp.core.presentation.mvi.onStart
 import com.ch000se.profileapp.domain.usecases.GetUserUseCase
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase
-) : ViewModel(), MVI<ProfileUiState, ProfileUiAction, ProfileSideEffect> by mvi(ProfileUiState()) {
+) : ViewModel(), MVI<ProfileUiState, ProfileUiAction, Nothing> by mvi(ProfileUiState()) {
 
     init {
         onStart { onAction(ProfileUiAction.LoadUser) }
@@ -23,7 +22,6 @@ class ProfileViewModel @Inject constructor(
     override fun onAction(action: ProfileUiAction) {
         when (action) {
             ProfileUiAction.LoadUser -> loadUser()
-            ProfileUiAction.EditProfile -> emitSideEffect(ProfileSideEffect.NavigateToEditProfile)
         }
     }
 

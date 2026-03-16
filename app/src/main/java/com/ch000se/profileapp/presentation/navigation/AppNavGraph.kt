@@ -74,7 +74,9 @@ fun AppNavGraph(
                         if (backStack.size > 1) backStack.removeLastOrNull()
                     },
                     onNavigateToContactDetail = { contactId ->
-                        backStack.add(Screen.ContactDetails(contactId))
+                        if (backStack.last() is Screen.Contacts) {
+                            backStack.add(Screen.ContactDetails(contactId))
+                        }
                     },
                 )
             }

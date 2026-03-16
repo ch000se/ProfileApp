@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,19 +46,8 @@ fun ContactsScreen(
 
     LifecycleStartEffect(key1 = lifecycleOwner) {
         viewModel.onAction(ContactsUiAction.LoadContacts)
-        onStopOrDispose {
-            viewModel.onAction(ContactsUiAction.StopContacts)
-        }
+        onStopOrDispose {}
     }
-    LaunchedEffect(Unit) {
-        viewModel.sideEffect.collect { effect ->
-            when (effect) {
-                ContactsSideEffect.NavigateToAddContact -> onNavigateToAddContact()
-                is ContactsSideEffect.NavigateToContactDetail -> onNavigateToContactDetail(effect.contact.id)
-            }
-        }
-    }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -80,7 +68,7 @@ fun ContactsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.onAction(ContactsUiAction.AddContact) },
+                onClick = onNavigateToAddContact,
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
@@ -123,9 +111,7 @@ fun ContactsScreen(
                         ) { contact ->
                             ContactItem(
                                 contact = contact,
-                                onClick = {
-                                    viewModel.onAction(ContactsUiAction.OpenContactDetail(contact))
-                                },
+                                onClick = { onNavigateToContactDetail(contact.id) },
                                 onDelete = {
                                     viewModel.onAction(ContactsUiAction.DeleteContact(contact.id))
                                 }

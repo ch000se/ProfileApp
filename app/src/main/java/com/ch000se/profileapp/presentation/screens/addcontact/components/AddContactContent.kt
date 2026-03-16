@@ -66,18 +66,18 @@ fun AddContactContentCompact(
 
         PaginatedLazyColumn(
             items = uiState.randomUsers,
-            key = { it.id },
+            key = { it.data.id },
             isLoadingMore = uiState.isLoadingMore,
             onLoadMore = { onAction(AddContactUiAction.LoadMoreUsers) },
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) { _, user ->
+        ) { _, selectable ->
             RandomUserItem(
-                user = user,
-                isSelected = uiState.selectedUser == user,
+                user = selectable.data,
+                isSelected = selectable.isSelected,
                 onClick = {
-                    onAction(AddContactUiAction.SelectUser(user))
+                    onAction(AddContactUiAction.SelectUser(selectable.data))
                 }
             )
         }
@@ -88,10 +88,10 @@ fun AddContactContentCompact(
                 .padding(16.dp)
         ) {
             CategorySelector(
-                selectedCategories = uiState.selectedCategories,
                 onCategoryToggle = { category ->
                     onAction(AddContactUiAction.ToggleCategory(category))
-                }
+                },
+                categories = uiState.categories
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -138,16 +138,16 @@ fun AddContentExpanded(
 
             PaginatedLazyColumn(
                 items = uiState.randomUsers,
-                key = { it.id },
+                key = { it.data.id },
                 isLoadingMore = uiState.isLoadingMore,
                 onLoadMore = { onAction(AddContactUiAction.LoadMoreUsers) },
                 verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) { _, user ->
+            ) { _, selectable ->
                 RandomUserItem(
-                    user = user,
-                    isSelected = uiState.selectedUser == user,
+                    user = selectable.data,
+                    isSelected = selectable.isSelected,
                     onClick = {
-                        onAction(AddContactUiAction.SelectUser(user))
+                        onAction(AddContactUiAction.SelectUser(selectable.data))
                     }
                 )
             }
@@ -158,7 +158,7 @@ fun AddContentExpanded(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             CategorySelector(
-                selectedCategories = uiState.selectedCategories,
+                categories = uiState.categories,
                 onCategoryToggle = {
                     onAction(AddContactUiAction.ToggleCategory(it))
                 }

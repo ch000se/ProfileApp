@@ -18,7 +18,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,13 +37,7 @@ fun ProfileScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.sideEffect.collect { effect ->
-            when (effect) {
-                ProfileSideEffect.NavigateToEditProfile -> onNavigateToEdit()
-            }
-        }
-    }
+
 
     Scaffold(
         topBar = {
@@ -66,7 +59,7 @@ fun ProfileScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.onAction(ProfileUiAction.EditProfile) },
+                onClick = onNavigateToEdit,
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {

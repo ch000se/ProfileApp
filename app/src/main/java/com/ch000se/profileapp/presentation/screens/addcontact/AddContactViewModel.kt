@@ -2,6 +2,7 @@ package com.ch000se.profileapp.presentation.screens.addcontact
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core.domain.mapper.toNetworkError
 import com.ch000se.profileapp.core.presentation.mvi.MVI
 import com.ch000se.profileapp.core.presentation.mvi.mvi
@@ -9,6 +10,7 @@ import com.ch000se.profileapp.core.presentation.mvi.onStart
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.domain.usecases.AddContactUseCase
+import com.ch000se.profileapp.domain.usecases.GetContactsUseCase
 import com.ch000se.profileapp.domain.usecases.GetRandomUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,8 +23,24 @@ class AddContactViewModel @Inject constructor(
     private val getRandomUsersUseCase: GetRandomUsersUseCase,
     private val addContactUseCase: AddContactUseCase,
 ) : ViewModel(),
-    MVI<AddContactUiState, AddContactUiAction, AddContactSideEffect> by mvi(AddContactUiState()) {
+    MVI<AddContactUiState, AddContactUiAction, AddContactSideEffect> by mvi(
+        AddContactUiState(categories = initialCategories)
+    ) {
 
+    companion object {
+        private val initialCategories = ContactCategory.entries.map {
+            CategoryUiModel(
+                category = it,
+                label = UiText.StringResource(
+                    when (it) {
+                        ContactCategory.FAMILY -> R.string.category_family
+                        ContactCategory.FRIENDS -> R.string.category_friends
+                        ContactCategory.WORK -> R.string.category_work
+                    }
+                )
+            )
+        }
+    }
 
     init {
         onStart { onAction(AddContactUiAction.LoadRandomUsers) }
@@ -41,10 +59,14 @@ class AddContactViewModel @Inject constructor(
 
     private fun loadRandomUsers() {
         viewModelScope.launch {
-            updateUiState { copy(isLoading = true, error = null) }
+            updateUiState { copy(isLoading = true, error = null, randomUsers = emptyList()) }
             getRandomUsersUseCase(PAGE_SIZE)
                 .onSuccess { users ->
-                    updateUiState { copy(isLoading = false, randomUsers = users) }
+                    updateUiState {
+                        copy(
+                            isLoading = false,
+                            randomUsers = users.map { Selectable(data = it) })
+                    }
                 }
                 .onFailure { e ->
                     updateUiState { copy(isLoading = false, error = e.toNetworkError()) }
@@ -64,7 +86,7 @@ class AddContactViewModel @Inject constructor(
                     updateUiState {
                         copy(
                             isLoadingMore = false,
-                            randomUsers = randomUsers + newUsers
+                            randomUsers = randomUsers + newUsers.map { Selectable(data = it) }
                         )
                     }
                 }
@@ -75,18 +97,23 @@ class AddContactViewModel @Inject constructor(
     }
 
     private fun selectUser(user: Contact) {
-        updateUiState { copy(selectedUser = user) }
+        updateUiState {
+            copy(
+                randomUsers = randomUsers.map { selectable ->
+                    selectable.copy(isSelected = selectable.data == user)
+                }
+            )
+        }
     }
 
     private fun toggleCategory(category: ContactCategory) {
         updateUiState {
-            val currentCategories = selectedCategories.toMutableList()
-            if (category in currentCategories) {
-                currentCategories.remove(category)
-            } else {
-                currentCategories.add(category)
-            }
-            copy(selectedCategories = currentCategories)
+            copy(
+                categories = categories.map { item ->
+                    if (item.category == category) item.copy(isSelected = !item.isSelected)
+                    else item
+                }
+            )
         }
     }
 
@@ -98,19 +125,9 @@ class AddContactViewModel @Inject constructor(
         viewModelScope.launch {
             updateUiState { copy(isSaving = true) }
             try {
-                val contact = with(selectedUser) {
-                    Contact(
-                        id = id,
-                        name = name,
-                        phone = phone,
-                        email = email,
-                        categories = state.selectedCategories,
-                        surname = surname,
-                        dateOfBirthday = dateOfBirthday,
-                        avatar = avatar
-                    )
-                }
+                val contact = selectedUser.copy(categories = state.selectedCategories)
                 addContactUseCase(contact)
+                updateUiState { copy(isSaving = false) }
                 emitSideEffect(AddContactSideEffect.NavigateBack)
             } catch (e: Exception) {
                 updateUiState { copy(isSaving = false) }

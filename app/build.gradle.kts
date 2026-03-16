@@ -1,5 +1,4 @@
 import java.util.Properties
-import kotlin.apply
 
 plugins {
     alias(libs.plugins.android.application)
@@ -8,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.stability.analyzer)
 }
 
 private val keyStorePropertiesFile = rootProject.file("keystore.properties")
@@ -34,10 +34,6 @@ android {
         buildConfigField("String", "API_KEY", apiKey)
     }
 
-    composeCompiler{
-        reportsDestination = layout.buildDirectory.dir("reports")
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -60,6 +56,11 @@ android {
         compose = true
         buildConfig = true
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    metricsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 
 dependencies {

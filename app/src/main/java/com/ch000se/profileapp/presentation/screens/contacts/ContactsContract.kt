@@ -10,13 +10,5 @@ data class ContactsUiState(
 
 sealed interface ContactsUiAction {
     data object LoadContacts : ContactsUiAction
-    data object StopContacts: ContactsUiAction
-    data object AddContact : ContactsUiAction
     data class DeleteContact(val contactId: String) : ContactsUiAction
-    data class OpenContactDetail(val contact: Contact) : ContactsUiAction
-}
-
-sealed interface ContactsSideEffect {
-    data object NavigateToAddContact : ContactsSideEffect
-    data class NavigateToContactDetail(val contact: Contact) : ContactsSideEffect
 }

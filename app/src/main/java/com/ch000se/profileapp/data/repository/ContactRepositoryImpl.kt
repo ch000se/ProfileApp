@@ -8,8 +8,6 @@ import com.ch000se.profileapp.data.mapper.toDomainListFromEntities
 import com.ch000se.profileapp.data.mapper.toEntity
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.repository.ContactRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ContactRepositoryImpl @Inject constructor(
@@ -17,10 +15,8 @@ class ContactRepositoryImpl @Inject constructor(
     private val randomUserApi: RandomUserApi
 ) : ContactRepository {
 
-    override fun getAllContacts(): Flow<List<Contact>> {
-        return contactDao.getAllContacts().map { entities ->
-            entities.toDomainListFromEntities()
-        }
+    override suspend fun getAllContacts(): List<Contact> {
+        return contactDao.getAllContacts().toDomainListFromEntities()
     }
 
     override suspend fun getContactById(contactId: String): Contact {

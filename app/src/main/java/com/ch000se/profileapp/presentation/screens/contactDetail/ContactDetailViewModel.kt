@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class ContactDetailViewModel @AssistedInject constructor(
     private val getContactByIdUseCase: GetContactByIdUseCase,
     @Assisted("contactId") private val contactId: String
-) : ViewModel(), MVI<ContactDetailUiState, ContactDetailUiAction, ContactDetailSideEffect> by mvi(
+) : ViewModel(), MVI<ContactDetailUiState, ContactDetailUiAction, Nothing> by mvi(
     ContactDetailUiState()
 ) {
     init {

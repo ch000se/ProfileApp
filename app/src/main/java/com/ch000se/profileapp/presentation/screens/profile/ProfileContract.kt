@@ -10,9 +10,4 @@ data class ProfileUiState(
 
 sealed interface ProfileUiAction {
     data object LoadUser : ProfileUiAction
-    data object EditProfile : ProfileUiAction
-}
-
-sealed interface ProfileSideEffect {
-    data object NavigateToEditProfile : ProfileSideEffect
 }

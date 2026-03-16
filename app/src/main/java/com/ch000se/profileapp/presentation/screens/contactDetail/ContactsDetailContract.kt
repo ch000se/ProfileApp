@@ -11,7 +11,3 @@ data class ContactDetailUiState(
 sealed interface ContactDetailUiAction {
     data object LoadUser : ContactDetailUiAction
 }
-
-sealed interface ContactDetailSideEffect {
-    data object NavigateToContactScreen : ContactDetailSideEffect
-}

@@ -10,7 +10,6 @@ import com.ch000se.profileapp.core.presentation.mvi.mvi
 import com.ch000se.profileapp.core.presentation.mvi.onStart
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.domain.usecases.DeleteContactUseCase
-import com.ch000se.profileapp.domain.usecases.GetContactsUseCase
 import com.ch000se.profileapp.domain.usecases.SearchContactsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -25,7 +24,6 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
-    private val getContactsUseCase: GetContactsUseCase,
     private val searchContactsUseCase: SearchContactsUseCase,
     private val deleteContactUseCase: DeleteContactUseCase
 ) : ViewModel(),
@@ -66,7 +64,7 @@ class ContactsViewModel @Inject constructor(
         when (action) {
             is ContactsUiAction.DeleteContact -> deleteContact(action.contactId)
             ContactsUiAction.LoadContacts -> loadContacts()
-            is ContactsUiAction.SearchContacts -> query.update { action.query.trim() }
+            is ContactsUiAction.SearchContacts -> query.update { action.query }
             is ContactsUiAction.ToggleCategoryFilter -> toggleCategoryFilter(action.category)
         }
     }
@@ -88,17 +86,7 @@ class ContactsViewModel @Inject constructor(
                 return
             }
 
-            val categoriesToFilter = if (selectedCategories.size == ContactCategory.entries.size) {
-                emptyList()
-            } else {
-                selectedCategories
-            }
-
-            val contacts = if (input.isBlank() && categoriesToFilter.isEmpty()) {
-                getContactsUseCase()
-            } else {
-                searchContactsUseCase(input, categoriesToFilter)
-            }
+            val contacts = searchContactsUseCase(input.trim(), selectedCategories)
 
             updateUiState {
                 copy(

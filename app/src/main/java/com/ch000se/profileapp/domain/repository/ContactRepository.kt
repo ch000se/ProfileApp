@@ -4,7 +4,6 @@ import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 
 interface ContactRepository {
-    suspend fun getAllContacts(): List<Contact>
     suspend fun searchWithFilters(query: String, categories: List<ContactCategory>): List<Contact>
     suspend fun getContactById(contactId: String): Contact
     suspend fun addContact(contact: Contact)

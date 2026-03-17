@@ -15,20 +15,13 @@ class ContactRepositoryImpl @Inject constructor(
     private val randomUserApi: RandomUserApi
 ) : ContactRepository {
 
-    override suspend fun getAllContacts(): List<Contact> {
-        return contactDao.getAllContacts().map { it.toDomainFromEntity() }
-    }
-
     override suspend fun searchWithFilters(
         query: String,
         categories: List<ContactCategory>
     ): List<Contact> {
-        val contacts = contactDao.searchByQuery(query)
+        return contactDao.searchByQuery(query)
             .map { it.toDomainFromEntity() }
-
-        return contacts.filter { contact ->
-            contact.categories.any { it in categories }
-        }
+            .filter { contact -> contact.categories.any { it in categories } }
     }
 
     override suspend fun getContactById(contactId: String): Contact {

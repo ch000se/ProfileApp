@@ -9,15 +9,12 @@ import com.ch000se.profileapp.data.local.entity.ContactEntity
 @Dao
 interface ContactDao {
 
-    @Query("SELECT * FROM contacts ORDER BY name ASC, surname ASC")
-    suspend fun getAllContacts(): List<ContactEntity>
-
     @Query(
         """
         SELECT * FROM contacts
-        WHERE (:query = '' OR
-             LOWER(name) LIKE '%' || LOWER(:query) || '%' OR
-             LOWER(surname) LIKE '%' || LOWER(:query) || '%')
+        WHERE :query = ''
+            OR (name || ' ' || surname) LIKE '%' || :query || '%'
+            OR (surname || ' ' || name) LIKE '%' || :query || '%'
         ORDER BY name ASC, surname ASC
         """
     )

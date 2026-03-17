@@ -24,6 +24,9 @@
     <string name="profile_title">Профіль</string>
     <string name="profile_not_found">Профіль не знайдено</string>
     <string name="edit_profile">Редагувати</string>
+    <string name="logout">Вийти</string>
+    <string name="logout_confirmation_title">Вийти з акаунту?</string>
+    <string name="logout_confirmation_message">Всі дані будуть видалені. Ви впевнені?</string>
     <string name="create_profile">Створити профіль</string>
     <string name="name_label">Ім\'я</string>
     <string name="surname_label">Прізвище</string>

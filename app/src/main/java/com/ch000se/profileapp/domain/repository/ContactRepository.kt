@@ -8,5 +8,6 @@ interface ContactRepository {
     suspend fun getContactById(contactId: String): Contact
     suspend fun addContact(contact: Contact)
     suspend fun deleteContact(contactId: String)
+    suspend fun deleteAllContacts()
     suspend fun getRandomUsers(count: Int = 10): Result<List<Contact>>
 }

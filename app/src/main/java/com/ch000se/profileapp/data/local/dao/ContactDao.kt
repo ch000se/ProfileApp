@@ -28,4 +28,7 @@ interface ContactDao {
 
     @Query("DELETE FROM contacts WHERE id = :id")
     suspend fun deleteContactById(id: String)
+
+    @Query("DELETE FROM contacts")
+    suspend fun deleteAll()
 }

@@ -40,6 +40,10 @@ fun AppNavGraph(
                     },
                     onNavigateBack = dropUnlessResumed {
                         if (backStack.size > 1) backStack.removeLastOrNull()
+                    },
+                    onLogout = dropUnlessResumed {
+                        backStack.clear()
+                        backStack.add(Screen.CreateProfile)
                     }
                 )
             }

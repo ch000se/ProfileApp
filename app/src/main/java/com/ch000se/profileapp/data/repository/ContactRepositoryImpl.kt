@@ -36,6 +36,10 @@ class ContactRepositoryImpl @Inject constructor(
         contactDao.deleteContactById(contactId)
     }
 
+    override suspend fun deleteAllContacts() {
+        contactDao.deleteAll()
+    }
+
     override suspend fun getRandomUsers(count: Int): Result<List<Contact>> {
         return try {
             val response = randomUserApi.getUsers(count)

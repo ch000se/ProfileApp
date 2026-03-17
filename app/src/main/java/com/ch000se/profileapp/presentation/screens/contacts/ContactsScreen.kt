@@ -131,45 +131,41 @@ fun ContactsScreen(
             Spacer(modifier = Modifier.height(4.dp))
 
             Box(modifier = Modifier.fillMaxSize()) {
-                when {
-                    uiState.isLoading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-
-                    uiState.contacts.isEmpty() -> {
-                        Text(
-                            text = stringResource(R.string.no_contacts),
-                            modifier = Modifier.align(Alignment.Center),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-
-                    else -> {
-                        LazyColumn(
-                            contentPadding = PaddingValues(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(
-                                items = uiState.contacts,
-                                key = { it.id }
-                            ) { contact ->
-                                ContactItem(
-                                    contact = contact,
-                                    onClick = { onNavigateToContactDetail(contact.id) },
-                                    onDelete = {
-                                        viewModel.onAction(
-                                            ContactsUiAction.DeleteContact(
-                                                contact.id
-                                            )
+                if (uiState.contacts.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.no_contacts),
+                        modifier = Modifier.align(Alignment.Center),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    LazyColumn(
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(
+                            items = uiState.contacts,
+                            key = { it.id }
+                        ) { contact ->
+                            ContactItem(
+                                contact = contact,
+                                onClick = { onNavigateToContactDetail(contact.id) },
+                                onDelete = {
+                                    viewModel.onAction(
+                                        ContactsUiAction.DeleteContact(
+                                            contact.id
                                         )
-                                    }
-                                )
-                            }
+                                    )
+                                }
+                            )
                         }
                     }
+                }
+
+                if (uiState.isDeleting) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
             }
         }

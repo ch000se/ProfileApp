@@ -5,11 +5,11 @@ import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 
 data class ContactsUiState(
-    val isLoading: Boolean = true,
     val contacts: List<Contact> = emptyList(),
     val query: String = "",
     val error: String? = null,
-    val categoryFilters: List<CategoryUiModel> = emptyList()
+    val categoryFilters: List<CategoryUiModel> = emptyList(),
+    val isDeleting: Boolean = false
 )
 
 sealed interface ContactsUiAction {

@@ -77,13 +77,16 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-
     private suspend fun fetchContacts(input: String) {
-        updateUiState { copy(isLoading = true) }
         try {
             val selectedCategories = uiState.value.categoryFilters
                 .filter { it.isSelected }
                 .map { it.category }
+
+            if (selectedCategories.isEmpty()) {
+                updateUiState { copy(contacts = emptyList(), error = null) }
+                return
+            }
 
             val categoriesToFilter = if (selectedCategories.size == ContactCategory.entries.size) {
                 emptyList()
@@ -100,12 +103,11 @@ class ContactsViewModel @Inject constructor(
             updateUiState {
                 copy(
                     contacts = contacts,
-                    isLoading = false,
                     error = null
                 )
             }
         } catch (e: Exception) {
-            updateUiState { copy(isLoading = false, error = e.message) }
+            updateUiState { copy(error = e.message) }
         }
     }
 
@@ -123,14 +125,14 @@ class ContactsViewModel @Inject constructor(
 
     private fun deleteContact(contactId: String) {
         viewModelScope.launch {
-            updateUiState { copy(isLoading = true) }
+            updateUiState { copy(isDeleting = true) }
             try {
                 deleteContactUseCase(contactId)
                 onAction(ContactsUiAction.LoadContacts)
             } catch (e: Exception) {
                 updateUiState { copy(error = e.message) }
             } finally {
-                updateUiState { copy(isLoading = false) }
+                updateUiState { copy(isDeleting = false) }
             }
         }
     }

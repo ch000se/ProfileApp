@@ -2,7 +2,6 @@ package com.ch000se.profileapp.data.repository
 
 import com.ch000se.ninjauser.data.remote.RandomUserApi
 import com.ch000se.profileapp.data.local.dao.ContactDao
-import com.ch000se.profileapp.data.local.entity.CategoryEntity
 import com.ch000se.profileapp.data.mapper.toDomainFromEntity
 import com.ch000se.profileapp.data.mapper.toDomainListFromDto
 import com.ch000se.profileapp.data.mapper.toEntity
@@ -24,12 +23,12 @@ class ContactRepositoryImpl @Inject constructor(
         query: String,
         categories: List<ContactCategory>
     ): List<Contact> {
-        val result = contactDao.searchWithFilters(
-            query = query,
-            categories = categories,
-            categoriesSize = categories.size
-        )
-        return result.map { it.toDomainFromEntity() }
+        val contacts = contactDao.searchByQuery(query)
+            .map { it.toDomainFromEntity() }
+
+        return contacts.filter { contact ->
+            contact.categories.any { it in categories }
+        }
     }
 
     override suspend fun getContactById(contactId: String): Contact {
@@ -37,12 +36,8 @@ class ContactRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addContact(contact: Contact) {
-        val entity = contact.toEntity()
-        val categories = contact.categories.map { CategoryEntity(name = it.name) }
-
-        contactDao.insertContactWithCategories(entity, categories)
+        contactDao.insertContact(contact.toEntity())
     }
-
 
     override suspend fun deleteContact(contactId: String) {
         contactDao.deleteContactById(contactId)

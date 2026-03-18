@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,7 +7,17 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.stability.analyzer)
 }
+
+private val keyStorePropertiesFile = rootProject.file("keystore.properties")
+private val keyStoreProperties = keyStorePropertiesFile.inputStream().use { inputStream ->
+    Properties().apply {
+        load(inputStream)
+    }
+}
+
+private val apiKey = keyStoreProperties.getProperty("API_KEY")
 
 android {
     namespace = "com.ch000se.profileapp"
@@ -19,10 +31,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    composeCompiler{
-        reportsDestination = layout.buildDirectory.dir("reports")
+        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {
@@ -45,7 +54,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    metricsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 
 dependencies {

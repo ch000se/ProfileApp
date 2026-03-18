@@ -29,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.User
+import com.ch000se.profileapp.core.presentation.components.ProfileAvatar
+import com.ch000se.profileapp.core.presentation.components.ProfileInfoItem
 
 @Composable
 fun ProfileContent(

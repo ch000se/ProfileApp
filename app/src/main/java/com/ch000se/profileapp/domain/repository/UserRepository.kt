@@ -6,4 +6,5 @@ interface UserRepository {
     suspend fun getUser(): User?
     suspend fun saveUser(user: User)
     suspend fun isUserExist(): Boolean
+    suspend fun deleteUser()
 }

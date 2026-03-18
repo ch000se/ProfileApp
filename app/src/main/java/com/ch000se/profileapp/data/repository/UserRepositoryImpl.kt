@@ -35,6 +35,12 @@ class UserRepositoryImpl @Inject constructor(
         return userDao.isUserExists()
     }
 
+    override suspend fun deleteUser() {
+        val user = userDao.getUser()?.toDomain()
+        user?.avatar?.let { imageFileManager.deleteImage(it) }
+        userDao.deleteUser()
+    }
+
     private suspend fun User.processForStorage(): User {
         return if (avatar.isNotEmpty() && !imageFileManager.isInternal(avatar)) {
             val internalPath = imageFileManager.copyImageToInternalStorage(avatar)

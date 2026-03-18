@@ -12,10 +12,21 @@
     <string name="error_phone_invalid">Невірний формат (використовуйте +380XXXXXXXXX)</string>
     <string name="error_date_required">Дата народження обов\'язкова</string>
 
+
+    <!-- NetworkError messages -->
+    <string name="error_request_timeout">Час очікування вичерпано. Спробуйте ще раз.</string>
+    <string name="error_no_internet">Немає підключення до інтернету</string>
+    <string name="error_server">Помилка сервера. Спробуйте пізніше.</string>
+    <string name="error_serialization">Помилка обробки даних</string>
+    <string name="error_unknown">Щось пішло не так</string>
+
     <!-- Profile Screen -->
     <string name="profile_title">Профіль</string>
     <string name="profile_not_found">Профіль не знайдено</string>
     <string name="edit_profile">Редагувати</string>
+    <string name="logout">Вийти</string>
+    <string name="logout_confirmation_title">Вийти з акаунту?</string>
+    <string name="logout_confirmation_message">Всі дані будуть видалені. Ви впевнені?</string>
     <string name="create_profile">Створити профіль</string>
     <string name="name_label">Ім\'я</string>
     <string name="surname_label">Прізвище</string>
@@ -28,4 +39,23 @@
     <string name="confirm">Підтвердити</string>
     <string name="cancel">Скасувати</string>
     <string name="phone_code">+380XXXXXXXXX</string>
+
+    <!-- Contacts Screen -->
+    <string name="contacts_title">Контакти</string>
+    <string name="add_contact">Додати контакт</string>
+    <string name="no_contacts">Контактів немає</string>
+    <string name="add_contact_title">Додати контакт</string>
+    <string name="select_user">Оберіть користувача</string>
+    <string name="select_category">Оберіть категорію</string>
+    <string name="category_family">Сім\'я</string>
+    <string name="category_friends">Друзі</string>
+    <string name="category_work">Робота</string>
+    <string name="save_contact">Зберегти контакт</string>
+    <string name="back">Назад</string>
+    <string name="refresh">Оновити</string>
+    <string name="error_loading">Помилка завантаження</string>
+    <string name="retry">Повторити</string>
+    <string name="select_categories">Оберіть категорії\n</string>
+    <string name="contact_detail_title">Профіль</string>
+    <string name="search">Пошук\n</string>
 </resources>

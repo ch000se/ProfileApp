@@ -32,7 +32,6 @@ fun FormFields(
     onAction: (EditProfileUiAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
 
     Column(
         modifier = modifier,
@@ -51,7 +50,7 @@ fun FormFields(
             isError = uiState.validationErrors.containsKey(UserField.NAME),
             supportingText = {
                 uiState.validationErrors[UserField.NAME]?.let {
-                    Text(it.toMessage(context))
+                    Text(it.toMessage())
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -71,7 +70,7 @@ fun FormFields(
             isError = uiState.validationErrors.containsKey(UserField.SURNAME),
             supportingText = {
                 uiState.validationErrors[UserField.SURNAME]?.let {
-                    Text(it.toMessage(context))
+                    Text(it.toMessage())
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -91,7 +90,7 @@ fun FormFields(
             isError = uiState.validationErrors.containsKey(UserField.EMAIL),
             supportingText = {
                 uiState.validationErrors[UserField.EMAIL]?.let {
-                    Text(it.toMessage(context))
+                    Text(it.toMessage())
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -113,7 +112,7 @@ fun FormFields(
             isError = uiState.validationErrors.containsKey(UserField.PHONE),
             supportingText = {
                 uiState.validationErrors[UserField.PHONE]?.let {
-                    Text(it.toMessage(context))
+                    Text(it.toMessage())
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -134,7 +133,7 @@ fun FormFields(
             isError = uiState.validationErrors.containsKey(UserField.DATE_OF_BIRTHDAY),
             supportingText = {
                 uiState.validationErrors[UserField.DATE_OF_BIRTHDAY]?.let {
-                    Text(it.toMessage(context))
+                    Text(it.toMessage())
                 }
             },
             modifier = Modifier

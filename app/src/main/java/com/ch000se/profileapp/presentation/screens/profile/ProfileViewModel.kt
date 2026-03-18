@@ -5,25 +5,24 @@ import androidx.lifecycle.viewModelScope
 import com.ch000se.profileapp.core.presentation.mvi.MVI
 import com.ch000se.profileapp.core.presentation.mvi.emitSideEffect
 import com.ch000se.profileapp.core.presentation.mvi.mvi
-import com.ch000se.profileapp.core.presentation.mvi.onStart
 import com.ch000se.profileapp.domain.usecases.GetUserUseCase
+import com.ch000se.profileapp.domain.usecases.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase
-) : ViewModel(), MVI<ProfileUiState, ProfileUiAction, ProfileSideEffect> by mvi(ProfileUiState()) {
-
-    init {
-        onStart { onAction(ProfileUiAction.LoadUser) }
-    }
+    private val getUserUseCase: GetUserUseCase,
+    private val logoutUseCase: LogoutUseCase
+) : ViewModel(), MVI<ProfileUiState, ProfileUiAction, ProfileUiEvent> by mvi(ProfileUiState()) {
 
     override fun onAction(action: ProfileUiAction) {
         when (action) {
             ProfileUiAction.LoadUser -> loadUser()
-            ProfileUiAction.EditProfile -> emitSideEffect(ProfileSideEffect.NavigateToEditProfile)
+            ProfileUiAction.ShowLogoutDialog -> updateUiState { copy(showLogoutDialog = true) }
+            ProfileUiAction.DismissLogoutDialog -> updateUiState { copy(showLogoutDialog = false) }
+            ProfileUiAction.ConfirmLogout -> logout()
         }
     }
 
@@ -33,6 +32,18 @@ class ProfileViewModel @Inject constructor(
             try {
                 val user = getUserUseCase()
                 updateUiState { copy(isLoading = false, user = user) }
+            } catch (e: Exception) {
+                updateUiState { copy(isLoading = false, error = e.message) }
+            }
+        }
+    }
+
+    private fun logout() {
+        viewModelScope.launch {
+            updateUiState { copy(isLoading = true) }
+            try {
+                logoutUseCase()
+                emitSideEffect(ProfileUiEvent.NavigateToCreateProfile)
             } catch (e: Exception) {
                 updateUiState { copy(isLoading = false, error = e.message) }
             }

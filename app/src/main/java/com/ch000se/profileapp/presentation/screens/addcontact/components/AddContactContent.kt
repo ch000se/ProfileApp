@@ -73,11 +73,12 @@ fun AddContactContentCompact(
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) { _, selectable ->
+            val user = selectable.data
             RandomUserItem(
-                user = selectable.data,
+                user = user,
                 isSelected = selectable.isSelected,
                 onClick = {
-                    onAction(AddContactUiAction.SelectUser(selectable.data))
+                    onAction(AddContactUiAction.SelectUser(user))
                 }
             )
         }
@@ -141,11 +142,12 @@ fun AddContentExpanded(
                 onLoadMore = { onAction(AddContactUiAction.LoadMoreUsers) },
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) { _, selectable ->
+                val user = selectable.data
                 RandomUserItem(
-                    user = selectable.data,
+                    user = user,
                     isSelected = selectable.isSelected,
                     onClick = {
-                        onAction(AddContactUiAction.SelectUser(selectable.data))
+                        onAction(AddContactUiAction.SelectUser(user))
                     }
                 )
             }

@@ -35,13 +35,16 @@ fun CategorySelector(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             categories.forEach { item ->
-                key(item.category) {
+                val category = item.category
+                val isSelected = item.isSelected
+                val label = item.label
+                key(category) {
                     FilterChip(
-                        selected = item.isSelected,
-                        onClick = { onCategoryToggle(item.category) },
-                        label = { Text(text = item.label.asString()) },
+                        selected = isSelected,
+                        onClick = { onCategoryToggle(category) },
+                        label = { Text(text = label.asString()) },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = when (item.category) {
+                            selectedContainerColor = when (category) {
                                 ContactCategory.FAMILY -> MaterialTheme.colorScheme.tertiaryContainer
                                 ContactCategory.FRIENDS -> MaterialTheme.colorScheme.secondaryContainer
                                 ContactCategory.WORK -> MaterialTheme.colorScheme.primaryContainer

@@ -116,7 +116,9 @@ class ContactsViewModel @Inject constructor(
             updateUiState { copy(isDeleting = true) }
             try {
                 deleteContactUseCase(contactId)
-                onAction(ContactsUiAction.LoadContacts)
+                updateUiState {
+                    copy(contacts = contacts.filter { it.id != contactId })
+                }
             } catch (e: Exception) {
                 updateUiState { copy(error = e.message) }
             } finally {

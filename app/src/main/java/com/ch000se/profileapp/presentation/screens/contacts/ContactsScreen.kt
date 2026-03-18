@@ -114,15 +114,18 @@ fun ContactsScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 uiState.categoryFilters.forEach { filter ->
-                    key(filter.category) {
+                    val category = filter.category
+                    val isSelected = filter.isSelected
+                    val label = filter.label
+                    key(category) {
                         FilterChip(
-                            selected = filter.isSelected,
+                            selected = isSelected,
                             onClick = {
                                 viewModel.onAction(
-                                    ContactsUiAction.ToggleCategoryFilter(filter.category)
+                                    ContactsUiAction.ToggleCategoryFilter(category)
                                 )
                             },
-                            label = { Text(filter.label.asString()) }
+                            label = { Text(label.asString()) }
                         )
                     }
                 }
@@ -147,14 +150,13 @@ fun ContactsScreen(
                             items = uiState.contacts,
                             key = { it.id }
                         ) { contact ->
+                            val contactId = contact.id
                             ContactItem(
                                 contact = contact,
-                                onClick = { onNavigateToContactDetail(contact.id) },
+                                onClick = { onNavigateToContactDetail(contactId) },
                                 onDelete = {
                                     viewModel.onAction(
-                                        ContactsUiAction.DeleteContact(
-                                            contact.id
-                                        )
+                                        ContactsUiAction.DeleteContact(contactId)
                                     )
                                 }
                             )

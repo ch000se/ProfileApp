@@ -2,12 +2,14 @@ package com.ch000se.profileapp.presentation.screens.contacts
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +26,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,7 +40,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -67,11 +70,12 @@ fun ContactsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var isSearchSectionVisible by remember { mutableStateOf(false) }
+    var isSearchSectionExpanded by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        isSearchSectionVisible = true
-    }
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (isSearchSectionExpanded) 180f else 0f,
+        animationSpec = tween(durationMillis = 300)
+    )
 
     LifecycleStartEffect(key1 = lifecycleOwner) {
         viewModel.onAction(ContactsUiAction.LoadContacts)
@@ -115,8 +119,29 @@ fun ContactsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { isSearchSectionExpanded = !isSearchSectionExpanded }
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.search_and_filters),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    modifier = Modifier.rotate(arrowRotation),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
             AnimatedVisibility(
-                visible = isSearchSectionVisible,
+                visible = isSearchSectionExpanded,
                 enter = expandVertically(
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,

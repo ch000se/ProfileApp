@@ -85,7 +85,8 @@ fun ContactDetailContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.Email,
                     label = stringResource(R.string.email_label),
-                    value = contact.email
+                    value = contact.email,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -93,7 +94,8 @@ fun ContactDetailContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.Phone,
                     label = stringResource(R.string.phone_label),
-                    value = contact.phone
+                    value = contact.phone,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -101,7 +103,8 @@ fun ContactDetailContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.DateRange,
                     label = stringResource(R.string.date_of_birthday_label),
-                    value = contact.dateOfBirthday
+                    value = contact.dateOfBirthday,
+                    copyEnabled = true
                 )
             }
         }
@@ -157,7 +160,8 @@ fun ContactDetailContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.Email,
                     label = stringResource(R.string.email_label),
-                    value = contact.email
+                    value = contact.email,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -165,7 +169,8 @@ fun ContactDetailContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.Phone,
                     label = stringResource(R.string.phone_label),
-                    value = contact.phone
+                    value = contact.phone,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -173,7 +178,8 @@ fun ContactDetailContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.DateRange,
                     label = stringResource(R.string.date_of_birthday_label),
-                    value = contact.dateOfBirthday
+                    value = contact.dateOfBirthday,
+                    copyEnabled = true
                 )
             }
         }

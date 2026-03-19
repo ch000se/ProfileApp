@@ -1,5 +1,13 @@
 package com.ch000se.profileapp.presentation.screens.contacts
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,8 +37,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -54,6 +66,12 @@ fun ContactsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    var isSearchSectionVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        isSearchSectionVisible = true
+    }
 
     LifecycleStartEffect(key1 = lifecycleOwner) {
         viewModel.onAction(ContactsUiAction.LoadContacts)
@@ -97,41 +115,60 @@ fun ContactsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            SearchBar(
-                query = uiState.query,
-                onQueryChange = {
-                    viewModel.onAction(ContactsUiAction.SearchContacts(it))
-                },
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            AnimatedVisibility(
+                visible = isSearchSectionVisible,
+                enter = expandVertically(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioLowBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(durationMillis = 400)
+                ),
+                exit = shrinkVertically(
+                    animationSpec = tween(durationMillis = 300)
+                ) + fadeOut(
+                    animationSpec = tween(durationMillis = 200)
+                )
             ) {
-                uiState.categoryFilters.forEach { filter ->
-                    val category = filter.category
-                    val isSelected = filter.isSelected
-                    val label = filter.label
-                    key(category) {
-                        FilterChip(
-                            selected = isSelected,
-                            onClick = {
-                                viewModel.onAction(
-                                    ContactsUiAction.ToggleCategoryFilter(category)
+                Column {
+                    SearchBar(
+                        query = uiState.query,
+                        onQueryChange = {
+                            viewModel.onAction(ContactsUiAction.SearchContacts(it))
+                        },
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        uiState.categoryFilters.forEach { filter ->
+                            val category = filter.category
+                            val isSelected = filter.isSelected
+                            val label = filter.label
+                            key(category) {
+                                FilterChip(
+                                    selected = isSelected,
+                                    onClick = {
+                                        viewModel.onAction(
+                                            ContactsUiAction.ToggleCategoryFilter(category)
+                                        )
+                                    },
+                                    label = { Text(label.asString()) }
                                 )
-                            },
-                            label = { Text(label.asString()) }
-                        )
+                            }
+                        }
                     }
+
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
             }
-
-            Spacer(modifier = Modifier.height(4.dp))
 
             Box(modifier = Modifier.fillMaxSize()) {
                 if (uiState.contacts.isEmpty()) {

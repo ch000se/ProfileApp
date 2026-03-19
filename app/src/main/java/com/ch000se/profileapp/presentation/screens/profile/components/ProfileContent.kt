@@ -85,7 +85,8 @@ fun ProfileContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.Email,
                     label = stringResource(R.string.email_label),
-                    value = user.email
+                    value = user.email,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -93,7 +94,8 @@ fun ProfileContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.Phone,
                     label = stringResource(R.string.phone_label),
-                    value = user.phone
+                    value = user.phone,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -101,7 +103,8 @@ fun ProfileContentCompact(
                 ProfileInfoItem(
                     icon = Icons.Default.DateRange,
                     label = stringResource(R.string.date_of_birthday_label),
-                    value = user.dateOfBirthday
+                    value = user.dateOfBirthday,
+                    copyEnabled = true
                 )
             }
         }
@@ -157,7 +160,8 @@ fun ProfileContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.Email,
                     label = stringResource(R.string.email_label),
-                    value = user.email
+                    value = user.email,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -165,7 +169,8 @@ fun ProfileContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.Phone,
                     label = stringResource(R.string.phone_label),
-                    value = user.phone
+                    value = user.phone,
+                    copyEnabled = true
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -173,7 +178,8 @@ fun ProfileContentExpanded(
                 ProfileInfoItem(
                     icon = Icons.Default.DateRange,
                     label = stringResource(R.string.date_of_birthday_label),
-                    value = user.dateOfBirthday
+                    value = user.dateOfBirthday,
+                    copyEnabled = true
                 )
             }
         }

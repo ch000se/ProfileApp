@@ -58,4 +58,7 @@
     <string name="select_categories">Оберіть категорії\n</string>
     <string name="contact_detail_title">Профіль</string>
     <string name="search">Пошук\n</string>
+    <string name="search_and_filters">Пошук та фільтри</string>
+    <string name="copied">Скопійовано</string>
+    <string name="copy">Копіювати</string>
 </resources>

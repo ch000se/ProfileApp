@@ -2,8 +2,8 @@ package com.ch000se.profileapp.presentation.screens.contactDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ch000se.profileapp.core.presentation.mvi.MVI
-import com.ch000se.profileapp.core.presentation.mvi.mvi
+import com.ch000se.profileapp.core.mvi.MVI
+import com.ch000se.profileapp.core.mvi.mvi
 import com.ch000se.profileapp.domain.usecases.GetContactByIdUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

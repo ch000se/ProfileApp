@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.mapper.asString
-import com.ch000se.profileapp.core.presentation.model.CategoryUiModel
+import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
+import com.ch000se.profileapp.core_ui.model.asString
 import com.ch000se.profileapp.domain.model.ContactCategory
 
 @Composable

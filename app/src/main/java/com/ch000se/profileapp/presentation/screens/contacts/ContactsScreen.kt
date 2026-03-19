@@ -56,7 +56,7 @@ import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.mapper.asString
+import com.ch000se.profileapp.core_ui.model.asString
 import com.ch000se.profileapp.presentation.screens.contacts.components.ContactItem
 import com.ch000se.profileapp.presentation.screens.contacts.components.SearchBar
 

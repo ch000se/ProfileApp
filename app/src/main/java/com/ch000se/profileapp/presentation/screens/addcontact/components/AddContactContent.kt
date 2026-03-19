@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.components.PaginatedLazyColumn
+import com.ch000se.profileapp.core_ui.components.PaginatedLazyColumn
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactUiAction
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactUiState
 

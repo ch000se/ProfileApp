@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.mapper.asString
+import com.ch000se.profileapp.presentation.common.mapper.asString
 import com.ch000se.profileapp.presentation.screens.addcontact.components.AddContactContent
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.mapper.toMessage
+import com.ch000se.profileapp.presentation.common.mapper.toMessage
 import com.ch000se.profileapp.domain.validation.UserField
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiAction
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiState

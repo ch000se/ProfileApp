@@ -1,7 +1,7 @@
 package com.ch000se.profileapp.presentation.screens.addcontact
 
-import com.ch000se.profileapp.core.domain.mapper.NetworkError
-import com.ch000se.profileapp.core.presentation.model.CategoryUiModel
+import com.ch000se.profileapp.core.error.NetworkError
+import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 

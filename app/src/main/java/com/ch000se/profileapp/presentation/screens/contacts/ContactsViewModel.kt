@@ -3,11 +3,11 @@ package com.ch000se.profileapp.presentation.screens.contacts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.model.CategoryUiModel
-import com.ch000se.profileapp.core.presentation.model.UiText
-import com.ch000se.profileapp.core.presentation.mvi.MVI
-import com.ch000se.profileapp.core.presentation.mvi.mvi
-import com.ch000se.profileapp.core.presentation.mvi.onStart
+import com.ch000se.profileapp.core.mvi.MVI
+import com.ch000se.profileapp.core.mvi.mvi
+import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
+import com.ch000se.profileapp.core_ui.model.UiText
+import com.ch000se.profileapp.core_ui.mvi.onStart
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.domain.usecases.DeleteContactUseCase
 import com.ch000se.profileapp.domain.usecases.SearchContactsUseCase

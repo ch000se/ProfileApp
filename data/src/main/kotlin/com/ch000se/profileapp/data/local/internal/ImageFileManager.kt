@@ -9,12 +9,18 @@ import java.io.File
 import java.util.UUID
 import javax.inject.Inject
 
-internal class ImageFileManager @Inject constructor(
+internal interface ImageFileManager {
+    suspend fun copyImageToInternalStorage(url: String): String
+    suspend fun deleteImage(url: String)
+    fun isInternal(url: String): Boolean
+}
+
+internal class ImageFileManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
-) {
+) : ImageFileManager {
     private val imagesDir: File = context.filesDir
 
-    suspend fun copyImageToInternalStorage(url: String): String {
+    override suspend fun copyImageToInternalStorage(url: String): String {
         val imageName = "IMG_${UUID.randomUUID()}.jpg"
         val file = File(imagesDir, imageName)
 
@@ -29,7 +35,7 @@ internal class ImageFileManager @Inject constructor(
         return file.absolutePath
     }
 
-    suspend fun deleteImage(url: String) {
+    override suspend fun deleteImage(url: String) {
         withContext(Dispatchers.IO) {
             val file = File(url)
             if (file.exists() && isInternal(file.absolutePath)) {
@@ -38,7 +44,7 @@ internal class ImageFileManager @Inject constructor(
         }
     }
 
-    fun isInternal(url: String): Boolean {
+    override fun isInternal(url: String): Boolean {
         return url.startsWith(imagesDir.absolutePath)
     }
 }

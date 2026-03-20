@@ -15,7 +15,7 @@ kotlin {
 }
 
 dependencies {
-    api(project(":core"))
+    api(projects.core)
 
     implementation(libs.kotlinx.coroutines.core)
 

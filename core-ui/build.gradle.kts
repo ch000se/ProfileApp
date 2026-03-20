@@ -43,7 +43,7 @@ composeCompiler {
 }
 
 dependencies {
-    api(project(":core"))
+    api(projects.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

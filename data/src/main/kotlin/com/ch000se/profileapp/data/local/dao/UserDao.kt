@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.ch000se.profileapp.data.local.entity.UserEntity
 
 @Dao
-interface UserDao {
+internal interface UserDao {
 
     @Query("SELECT * FROM user WHERE id = 1")
     suspend fun getUser(): UserEntity?

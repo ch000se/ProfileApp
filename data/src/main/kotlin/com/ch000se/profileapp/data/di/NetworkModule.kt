@@ -1,5 +1,6 @@
 package com.ch000se.profileapp.data.di
 
+import com.ch000se.profileapp.data.BuildConfig
 import com.ch000se.profileapp.data.remote.api.RandomUserApi
 import com.ch000se.profileapp.data.remote.interceptor.AuthInterceptor
 import dagger.Module
@@ -27,10 +28,8 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(
-        @ApiKey apiKey: String
-    ): AuthInterceptor {
-        return AuthInterceptor(apiKey)
+    fun provideAuthInterceptor(): AuthInterceptor {
+        return AuthInterceptor(BuildConfig.API_KEY)
     }
 
     @Provides

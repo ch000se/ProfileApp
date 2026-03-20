@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,15 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
+
+private val keyStorePropertiesFile = rootProject.file("keystore.properties")
+private val keyStoreProperties = keyStorePropertiesFile.inputStream().use { inputStream ->
+    Properties().apply {
+        load(inputStream)
+    }
+}
+
+private val apiKey = keyStoreProperties.getProperty("API_KEY")
 
 android {
     namespace = "com.ch000se.profileapp.data"
@@ -15,6 +26,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "API_KEY", apiKey)
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -38,8 +55,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    api(project(":domain"))
+    implementation(projects.core)
+    api(projects.domain)
 
     implementation(libs.androidx.core.ktx)
 

@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.ch000se.profileapp.data.local.entity.ContactEntity
 
 @Dao
-interface ContactDao {
+internal interface ContactDao {
 
     @Query(
         """

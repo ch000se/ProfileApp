@@ -25,7 +25,7 @@ interface MVI<UiState, UiAction, SideEffect> {
     fun setup(scope: CoroutineScope, initialAction: () -> Unit = {})
 }
 
-class MVIDelegate<UiState, UiAction, SideEffect>(
+internal class MVIDelegate<UiState, UiAction, SideEffect>(
     initialState: UiState
 ) : MVI<UiState, UiAction, SideEffect> {
 

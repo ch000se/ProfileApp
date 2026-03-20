@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.ch000se.profileapp.domain.model.ContactCategory
 
 @Entity(tableName = "contacts")
-data class ContactEntity(
+internal data class ContactEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String,

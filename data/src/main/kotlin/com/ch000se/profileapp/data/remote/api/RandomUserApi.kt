@@ -4,7 +4,7 @@ import com.ch000se.profileapp.data.remote.dto.UserDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface RandomUserApi {
+internal interface RandomUserApi {
 
     @GET("v2/randomuser")
     suspend fun getUsers(

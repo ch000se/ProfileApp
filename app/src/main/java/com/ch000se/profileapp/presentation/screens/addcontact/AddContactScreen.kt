@@ -38,7 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core.error.NetworkError
 import com.ch000se.profileapp.presentation.common.mapper.asString
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.addcontact.preview.AddContactPreviewData
 import com.ch000se.profileapp.presentation.screens.addcontact.components.AddContactContent
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
@@ -160,7 +160,7 @@ private fun AddContactScreenContent(
 private fun AddContactScreenPreview() {
     ProfileAppTheme {
         AddContactScreenContent(
-            uiState = PreviewData.sampleAddContactUiStateWithSelection,
+            uiState = AddContactPreviewData.sampleAddContactUiStateWithSelection,
             windowSize = WindowWidthSizeClass.Compact,
             snackbarHostState = SnackbarHostState(),
             onNavigateBack = {},
@@ -205,7 +205,7 @@ private fun AddContactScreenErrorPreview() {
 private fun AddContactScreenSavingPreview() {
     ProfileAppTheme {
         AddContactScreenContent(
-            uiState = PreviewData.sampleAddContactUiStateWithSelection.copy(
+            uiState = AddContactPreviewData.sampleAddContactUiStateWithSelection.copy(
                 isSaving = true,
                 isButtonEnabled = false
             ),

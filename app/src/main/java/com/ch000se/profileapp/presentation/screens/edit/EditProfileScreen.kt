@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.edit.preview.EditProfilePreviewData
 import com.ch000se.profileapp.presentation.screens.edit.components.BirthDatePickerDialog
 import com.ch000se.profileapp.presentation.screens.edit.components.EditProfileContentCompact
 import com.ch000se.profileapp.presentation.screens.edit.components.EditProfileContentExpanded
@@ -150,7 +150,7 @@ private fun EditProfileScreenContent(
 private fun EditProfileScreenPreview() {
     ProfileAppTheme {
         EditProfileScreenContent(
-            uiState = PreviewData.sampleEditProfileUiState,
+            uiState = EditProfilePreviewData.sampleEditProfileUiState,
             isCreateMode = false,
             windowSize = WindowWidthSizeClass.Compact,
             onAction = {},
@@ -178,7 +178,7 @@ private fun EditProfileScreenCreateModePreview() {
 private fun EditProfileScreenLoadingPreview() {
     ProfileAppTheme {
         EditProfileScreenContent(
-            uiState = PreviewData.sampleEditProfileUiStateLoading,
+            uiState = EditProfilePreviewData.sampleEditProfileUiStateLoading,
             isCreateMode = false,
             windowSize = WindowWidthSizeClass.Compact,
             onAction = {},
@@ -192,7 +192,7 @@ private fun EditProfileScreenLoadingPreview() {
 private fun EditProfileScreenValidationErrorsPreview() {
     ProfileAppTheme {
         EditProfileScreenContent(
-            uiState = PreviewData.sampleEditProfileUiStateWithErrors,
+            uiState = EditProfilePreviewData.sampleEditProfileUiStateWithErrors,
             isCreateMode = false,
             windowSize = WindowWidthSizeClass.Compact,
             onAction = {},

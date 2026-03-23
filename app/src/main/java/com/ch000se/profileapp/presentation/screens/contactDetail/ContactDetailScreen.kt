@@ -27,7 +27,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.Contact
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.contactDetail.preview.ContactDetailPreviewData
 import com.ch000se.profileapp.presentation.screens.contactDetail.component.ContactDetailContent
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
@@ -113,7 +113,7 @@ private fun ContactDetailScreenContent(
 private fun ContactDetailScreenPreview() {
     ProfileAppTheme {
         ContactDetailScreenContent(
-            contact = PreviewData.sampleContact,
+            contact = ContactDetailPreviewData.sampleContact,
             isLoading = false,
             windowSize = WindowWidthSizeClass.Compact,
             onNavigateBack = {}

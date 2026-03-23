@@ -22,7 +22,7 @@ import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
 import com.ch000se.profileapp.core_ui.model.UiText
 import com.ch000se.profileapp.core_ui.model.asString
 import com.ch000se.profileapp.domain.model.ContactCategory
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.addcontact.preview.AddContactPreviewData
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
@@ -70,7 +70,7 @@ private fun CategorySelectorPreview() {
     ProfileAppTheme {
         Surface {
             CategorySelector(
-                categories = PreviewData.sampleCategoryUiModels,
+                categories = AddContactPreviewData.sampleCategoryUiModels,
                 onCategoryToggle = {},
                 modifier = Modifier.padding(16.dp)
             )

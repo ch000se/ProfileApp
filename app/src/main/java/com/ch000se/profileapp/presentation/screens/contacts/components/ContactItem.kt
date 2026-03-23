@@ -40,8 +40,8 @@ import coil3.compose.AsyncImage
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
-import com.ch000se.profileapp.presentation.preview.ContactPreviewProvider
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.contacts.preview.ContactPreviewProvider
+import com.ch000se.profileapp.presentation.screens.contacts.preview.ContactsPreviewData
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -158,7 +158,7 @@ private fun ContactItemPreview() {
     ProfileAppTheme {
         Surface {
             ContactItem(
-                contact = PreviewData.sampleContactWithAllCategories,
+                contact = ContactsPreviewData.sampleContactWithAllCategories,
                 onClick = {},
                 onDelete = {},
                 modifier = Modifier.padding(8.dp)
@@ -193,7 +193,7 @@ private fun ContactItemListPreview() {
                 modifier = Modifier.padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                PreviewData.sampleContactsList.forEach { contact ->
+                ContactsPreviewData.sampleContactsList.forEach { contact ->
                     ContactItem(
                         contact = contact,
                         onClick = {},

@@ -27,7 +27,7 @@ import com.ch000se.profileapp.R
 import com.ch000se.profileapp.presentation.common.mapper.toMessage
 import com.ch000se.profileapp.domain.validation.UserField
 import com.ch000se.profileapp.domain.validation.ValidationError
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.edit.preview.EditProfilePreviewData
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiAction
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiState
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
@@ -165,7 +165,7 @@ private fun FormFieldsPreview() {
     ProfileAppTheme {
         Surface {
             FormFields(
-                uiState = PreviewData.sampleEditProfileUiState,
+                uiState = EditProfilePreviewData.sampleEditProfileUiState,
                 onAction = {},
                 modifier = Modifier.padding(16.dp)
             )
@@ -179,7 +179,7 @@ private fun FormFieldsWithErrorsPreview() {
     ProfileAppTheme {
         Surface {
             FormFields(
-                uiState = PreviewData.sampleEditProfileUiStateWithErrors,
+                uiState = EditProfilePreviewData.sampleEditProfileUiStateWithErrors,
                 onAction = {},
                 modifier = Modifier.padding(16.dp)
             )

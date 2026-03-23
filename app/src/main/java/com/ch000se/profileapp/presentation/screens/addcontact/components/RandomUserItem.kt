@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.ch000se.profileapp.domain.model.Contact
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.addcontact.preview.AddContactPreviewData
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
@@ -125,7 +125,7 @@ private fun RandomUserItemPreview() {
     ProfileAppTheme {
         Surface {
             RandomUserItem(
-                user = PreviewData.sampleContact,
+                user = AddContactPreviewData.sampleContact,
                 isSelected = false,
                 onClick = {},
                 modifier = Modifier.padding(8.dp)
@@ -144,12 +144,12 @@ private fun RandomUserItemStatesPreview() {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 RandomUserItem(
-                    user = PreviewData.sampleContact,
+                    user = AddContactPreviewData.sampleContact,
                     isSelected = false,
                     onClick = {}
                 )
                 RandomUserItem(
-                    user = PreviewData.sampleContact,
+                    user = AddContactPreviewData.sampleContact,
                     isSelected = true,
                     onClick = {}
                 )

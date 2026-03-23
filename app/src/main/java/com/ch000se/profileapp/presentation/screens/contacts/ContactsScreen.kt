@@ -59,7 +59,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core_ui.model.asString
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.contacts.preview.ContactsPreviewData
 import com.ch000se.profileapp.presentation.screens.contacts.components.ContactItem
 import com.ch000se.profileapp.presentation.screens.contacts.components.SearchBar
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
@@ -260,8 +260,8 @@ private fun ContactsScreenPreview() {
     ProfileAppTheme {
         ContactsScreenContent(
             uiState = ContactsUiState(
-                contacts = PreviewData.sampleContactsList,
-                categoryFilters = PreviewData.sampleCategoryUiModels
+                contacts = ContactsPreviewData.sampleContactsList,
+                categoryFilters = ContactsPreviewData.sampleCategoryUiModels
             ),
             onNavigateToAddContact = {},
             onNavigateToContactDetail = {},
@@ -298,8 +298,8 @@ private fun ContactsScreenDeletingPreview() {
     ProfileAppTheme {
         ContactsScreenContent(
             uiState = ContactsUiState(
-                contacts = PreviewData.sampleContactsList,
-                categoryFilters = PreviewData.sampleCategoryUiModels,
+                contacts = ContactsPreviewData.sampleContactsList,
+                categoryFilters = ContactsPreviewData.sampleCategoryUiModels,
                 isDeleting = true
             ),
             onNavigateToAddContact = {},
@@ -318,8 +318,8 @@ private fun ContactsScreenWithSearchPreview() {
     ProfileAppTheme {
         ContactsScreenContent(
             uiState = ContactsUiState(
-                contacts = PreviewData.sampleContactsList.take(1),
-                categoryFilters = PreviewData.sampleCategoryUiModels,
+                contacts = ContactsPreviewData.sampleContactsList.take(1),
+                categoryFilters = ContactsPreviewData.sampleCategoryUiModels,
                 query = "Alice"
             ),
             onNavigateToAddContact = {},

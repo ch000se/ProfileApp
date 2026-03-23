@@ -35,8 +35,8 @@ import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.User
 import com.ch000se.profileapp.core_ui.components.ProfileAvatar
 import com.ch000se.profileapp.presentation.common.components.ProfileInfoItem
-import com.ch000se.profileapp.presentation.preview.PreviewData
-import com.ch000se.profileapp.presentation.preview.UserPreviewProvider
+import com.ch000se.profileapp.presentation.screens.profile.preview.ProfilePreviewData
+import com.ch000se.profileapp.presentation.screens.profile.preview.UserPreviewProvider
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
@@ -198,7 +198,7 @@ fun ProfileContentExpanded(
 private fun ProfileContentCompactPreview() {
     ProfileAppTheme {
         Surface {
-            ProfileContentCompact(user = PreviewData.sampleUser)
+            ProfileContentCompact(user = ProfilePreviewData.sampleUser)
         }
     }
 }
@@ -208,7 +208,7 @@ private fun ProfileContentCompactPreview() {
 private fun ProfileContentExpandedPreview() {
     ProfileAppTheme {
         Surface {
-            ProfileContentExpanded(user = PreviewData.sampleUser)
+            ProfileContentExpanded(user = ProfilePreviewData.sampleUser)
         }
     }
 }

@@ -35,8 +35,8 @@ import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.core_ui.components.ProfileAvatar
 import com.ch000se.profileapp.presentation.common.components.ProfileInfoItem
-import com.ch000se.profileapp.presentation.preview.ContactPreviewProvider
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.contactDetail.preview.ContactDetailPreviewData
+import com.ch000se.profileapp.presentation.screens.contactDetail.preview.ContactDetailPreviewProvider
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
@@ -198,7 +198,7 @@ fun ContactDetailContentExpanded(
 private fun ContactDetailContentCompactPreview() {
     ProfileAppTheme {
         Surface {
-            ContactDetailContentCompact(contact = PreviewData.sampleContact)
+            ContactDetailContentCompact(contact = ContactDetailPreviewData.sampleContact)
         }
     }
 }
@@ -208,7 +208,7 @@ private fun ContactDetailContentCompactPreview() {
 private fun ContactDetailContentExpandedPreview() {
     ProfileAppTheme {
         Surface {
-            ContactDetailContentExpanded(contact = PreviewData.sampleContact)
+            ContactDetailContentExpanded(contact = ContactDetailPreviewData.sampleContact)
         }
     }
 }
@@ -216,7 +216,7 @@ private fun ContactDetailContentExpandedPreview() {
 @Preview(name = "Contact Variants")
 @Composable
 private fun ContactDetailContentVariantsPreview(
-    @PreviewParameter(ContactPreviewProvider::class) contact: Contact
+    @PreviewParameter(ContactDetailPreviewProvider::class) contact: Contact
 ) {
     ProfileAppTheme {
         Surface {

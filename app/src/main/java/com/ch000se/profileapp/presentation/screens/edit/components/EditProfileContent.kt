@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.edit.preview.EditProfilePreviewData
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiAction
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiState
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
@@ -123,7 +123,7 @@ private fun EditProfileContentCompactPreview() {
     ProfileAppTheme {
         Surface {
             EditProfileContentCompact(
-                uiState = PreviewData.sampleEditProfileUiState,
+                uiState = EditProfilePreviewData.sampleEditProfileUiState,
                 isCreateMode = false,
                 onAction = {}
             )
@@ -137,7 +137,7 @@ private fun EditProfileContentExpandedPreview() {
     ProfileAppTheme {
         Surface {
             EditProfileContentExpanded(
-                uiState = PreviewData.sampleEditProfileUiState,
+                uiState = EditProfilePreviewData.sampleEditProfileUiState,
                 isCreateMode = false,
                 onAction = {}
             )
@@ -151,7 +151,7 @@ private fun EditProfileContentCreateModePreview() {
     ProfileAppTheme {
         Surface {
             EditProfileContentCompact(
-                uiState = PreviewData.sampleEditProfileUiStateEmpty,
+                uiState = EditProfilePreviewData.sampleEditProfileUiStateEmpty,
                 isCreateMode = true,
                 onAction = {}
             )

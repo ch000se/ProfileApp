@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core_ui.components.PaginatedLazyColumn
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.addcontact.preview.AddContactPreviewData
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactUiAction
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactUiState
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
@@ -186,7 +186,7 @@ private fun AddContactContentCompactPreview() {
     ProfileAppTheme {
         Surface {
             AddContactContentCompact(
-                uiState = PreviewData.sampleAddContactUiStateWithSelection,
+                uiState = AddContactPreviewData.sampleAddContactUiStateWithSelection,
                 onAction = {}
             )
         }
@@ -199,7 +199,7 @@ private fun AddContactContentExpandedPreview() {
     ProfileAppTheme {
         Surface {
             AddContentExpanded(
-                uiState = PreviewData.sampleAddContactUiStateWithSelection,
+                uiState = AddContactPreviewData.sampleAddContactUiStateWithSelection,
                 onAction = {}
             )
         }

@@ -37,7 +37,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.User
-import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.presentation.screens.profile.preview.ProfilePreviewData
 import com.ch000se.profileapp.presentation.screens.profile.components.ProfileContent
 import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 import kotlinx.coroutines.flow.collectLatest
@@ -193,7 +193,7 @@ private fun ProfileScreenContent(
 private fun ProfileScreenPreview() {
     ProfileAppTheme {
         ProfileScreenContent(
-            user = PreviewData.sampleUser,
+            user = ProfilePreviewData.sampleUser,
             isLoading = false,
             showLogoutDialog = false,
             windowSize = WindowWidthSizeClass.Compact,
@@ -229,7 +229,7 @@ private fun ProfileScreenLoadingPreview() {
 private fun ProfileScreenLogoutDialogPreview() {
     ProfileAppTheme {
         ProfileScreenContent(
-            user = PreviewData.sampleUser,
+            user = ProfilePreviewData.sampleUser,
             isLoading = false,
             showLogoutDialog = true,
             windowSize = WindowWidthSizeClass.Compact,

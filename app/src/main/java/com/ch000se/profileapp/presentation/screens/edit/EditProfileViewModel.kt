@@ -2,10 +2,10 @@ package com.ch000se.profileapp.presentation.screens.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ch000se.profileapp.core.presentation.mvi.MVI
-import com.ch000se.profileapp.core.presentation.mvi.emitSideEffect
-import com.ch000se.profileapp.core.presentation.mvi.mvi
-import com.ch000se.profileapp.core.presentation.mvi.onStart
+import com.ch000se.profileapp.core.mvi.MVI
+import com.ch000se.profileapp.core.mvi.mvi
+import com.ch000se.profileapp.core_ui.mvi.emitSideEffect
+import com.ch000se.profileapp.core_ui.mvi.onStart
 import com.ch000se.profileapp.domain.model.User
 import com.ch000se.profileapp.domain.usecases.GetUserUseCase
 import com.ch000se.profileapp.domain.usecases.SaveUserUseCase

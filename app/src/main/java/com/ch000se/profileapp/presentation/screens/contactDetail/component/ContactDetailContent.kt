@@ -20,17 +20,24 @@ import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.Contact
-import com.ch000se.profileapp.core.presentation.components.ProfileAvatar
-import com.ch000se.profileapp.core.presentation.components.ProfileInfoItem
+import com.ch000se.profileapp.core_ui.components.ProfileAvatar
+import com.ch000se.profileapp.presentation.common.components.ProfileInfoItem
+import com.ch000se.profileapp.presentation.screens.contactDetail.preview.ContactDetailPreviewData
+import com.ch000se.profileapp.presentation.screens.contactDetail.preview.ContactDetailPreviewProvider
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
 fun ContactDetailContent(
@@ -182,6 +189,38 @@ fun ContactDetailContentExpanded(
                     copyEnabled = true
                 )
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ContactDetailContentCompactPreview() {
+    ProfileAppTheme {
+        Surface {
+            ContactDetailContentCompact(contact = ContactDetailPreviewData.sampleContact)
+        }
+    }
+}
+
+@Preview(name = "Expanded", showBackground = true, widthDp = 840, heightDp = 480)
+@Composable
+private fun ContactDetailContentExpandedPreview() {
+    ProfileAppTheme {
+        Surface {
+            ContactDetailContentExpanded(contact = ContactDetailPreviewData.sampleContact)
+        }
+    }
+}
+
+@Preview(name = "Contact Variants")
+@Composable
+private fun ContactDetailContentVariantsPreview(
+    @PreviewParameter(ContactDetailPreviewProvider::class) contact: Contact
+) {
+    ProfileAppTheme {
+        Surface {
+            ContactDetailContentCompact(contact = contact)
         }
     }
 }

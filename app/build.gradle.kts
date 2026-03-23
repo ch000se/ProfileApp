@@ -1,23 +1,10 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.stability.analyzer)
 }
-
-private val keyStorePropertiesFile = rootProject.file("keystore.properties")
-private val keyStoreProperties = keyStorePropertiesFile.inputStream().use { inputStream ->
-    Properties().apply {
-        load(inputStream)
-    }
-}
-
-private val apiKey = keyStoreProperties.getProperty("API_KEY")
 
 android {
     namespace = "com.ch000se.profileapp"
@@ -31,7 +18,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {
@@ -49,7 +35,7 @@ android {
     }
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+            languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0
         }
     }
     buildFeatures {
@@ -61,9 +47,13 @@ android {
 composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
     metricsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFiles.add(rootProject.layout.projectDirectory.file("compose_compiler_config.conf"))
 }
 
 dependencies {
+    implementation(projects.coreUi)
+    implementation(projects.data)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -85,22 +75,11 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
 
-    implementation(libs.kotlinx.serialization.json)
-
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization)
-    implementation(libs.okhttp.logging)
 
     implementation(libs.androidx.compose.material.icons.extended)
 }

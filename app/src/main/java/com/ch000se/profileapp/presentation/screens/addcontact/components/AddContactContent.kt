@@ -12,16 +12,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
-import com.ch000se.profileapp.core.presentation.components.PaginatedLazyColumn
+import com.ch000se.profileapp.core_ui.components.PaginatedLazyColumn
+import com.ch000se.profileapp.presentation.screens.addcontact.preview.AddContactPreviewData
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactUiAction
 import com.ch000se.profileapp.presentation.screens.addcontact.AddContactUiState
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
 fun AddContactContent(
@@ -171,6 +176,32 @@ fun AddContentExpanded(
             ) {
                 Text(stringResource(R.string.save_contact))
             }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun AddContactContentCompactPreview() {
+    ProfileAppTheme {
+        Surface {
+            AddContactContentCompact(
+                uiState = AddContactPreviewData.sampleAddContactUiStateWithSelection,
+                onAction = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Expanded", showBackground = true, widthDp = 840, heightDp = 480)
+@Composable
+private fun AddContactContentExpandedPreview() {
+    ProfileAppTheme {
+        Surface {
+            AddContentExpanded(
+                uiState = AddContactPreviewData.sampleAddContactUiStateWithSelection,
+                onAction = {}
+            )
         }
     }
 }

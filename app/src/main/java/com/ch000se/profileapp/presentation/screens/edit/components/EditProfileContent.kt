@@ -12,12 +12,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.ch000se.profileapp.presentation.screens.edit.preview.EditProfilePreviewData
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiAction
 import com.ch000se.profileapp.presentation.screens.edit.EditProfileUiState
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
 fun EditProfileContentCompact(
@@ -107,6 +112,48 @@ fun EditProfileContentExpanded(
                 isCreateMode = isCreateMode,
                 onClick = { onAction(EditProfileUiAction.SaveProfile) },
                 modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun EditProfileContentCompactPreview() {
+    ProfileAppTheme {
+        Surface {
+            EditProfileContentCompact(
+                uiState = EditProfilePreviewData.sampleEditProfileUiState,
+                isCreateMode = false,
+                onAction = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Expanded", showBackground = true, widthDp = 840, heightDp = 480)
+@Composable
+private fun EditProfileContentExpandedPreview() {
+    ProfileAppTheme {
+        Surface {
+            EditProfileContentExpanded(
+                uiState = EditProfilePreviewData.sampleEditProfileUiState,
+                isCreateMode = false,
+                onAction = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "Create Mode", showBackground = true, widthDp = 360, heightDp = 640)
+@Composable
+private fun EditProfileContentCreateModePreview() {
+    ProfileAppTheme {
+        Surface {
+            EditProfileContentCompact(
+                uiState = EditProfilePreviewData.sampleEditProfileUiStateEmpty,
+                isCreateMode = true,
+                onAction = {}
             )
         }
     }

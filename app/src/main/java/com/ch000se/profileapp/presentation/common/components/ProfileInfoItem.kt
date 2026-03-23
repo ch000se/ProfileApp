@@ -18,8 +18,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,9 +40,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.core_ui.extensions.thenIf
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -152,6 +159,65 @@ fun ProfileInfoItem(
                         tint = iconTint
                     )
                 }
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ProfileInfoItemPreview() {
+    ProfileAppTheme {
+        Surface {
+            ProfileInfoItem(
+                icon = Icons.Default.Email,
+                label = "Email",
+                value = "svyat.@gmail.com",
+                copyEnabled = true
+            )
+        }
+    }
+}
+
+@Preview(name = "Without Copy Button", showBackground = true)
+@Composable
+private fun ProfileInfoItemNoCopyPreview() {
+    ProfileAppTheme {
+        Surface {
+            ProfileInfoItem(
+                icon = Icons.Default.DateRange,
+                label = "Birthday",
+                value = "15.03.1990",
+                copyEnabled = false
+            )
+        }
+    }
+}
+
+@Preview(name = "All Items", showBackground = true)
+@Composable
+private fun ProfileInfoItemAllPreview() {
+    ProfileAppTheme {
+        Surface {
+            Column(modifier = Modifier.padding(16.dp)) {
+                ProfileInfoItem(
+                    icon = Icons.Default.Email,
+                    label = "Email",
+                    value = "svyat.@gmail.com",
+                    copyEnabled = true
+                )
+                ProfileInfoItem(
+                    icon = Icons.Default.Phone,
+                    label = "Phone",
+                    value = "+380901234567",
+                    copyEnabled = true
+                )
+                ProfileInfoItem(
+                    icon = Icons.Default.DateRange,
+                    label = "Birthday",
+                    value = "15.03.1990",
+                    copyEnabled = true
+                )
             }
         }
     }

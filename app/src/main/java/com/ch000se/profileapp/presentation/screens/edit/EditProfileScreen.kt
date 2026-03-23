@@ -19,12 +19,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.presentation.preview.PreviewData
 import com.ch000se.profileapp.presentation.screens.edit.components.BirthDatePickerDialog
 import com.ch000se.profileapp.presentation.screens.edit.components.EditProfileContentCompact
 import com.ch000se.profileapp.presentation.screens.edit.components.EditProfileContentExpanded
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -73,6 +77,24 @@ fun EditProfileScreen(
         )
     }
 
+    EditProfileScreenContent(
+        uiState = uiState,
+        isCreateMode = isCreateMode,
+        windowSize = windowSize,
+        onAction = viewModel::onAction,
+        onNavigateBack = onNavigateBack
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun EditProfileScreenContent(
+    uiState: EditProfileUiState,
+    isCreateMode: Boolean,
+    windowSize: WindowWidthSizeClass,
+    onAction: (EditProfileUiAction) -> Unit,
+    onNavigateBack: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -106,7 +128,7 @@ fun EditProfileScreen(
                 EditProfileContentCompact(
                     uiState = uiState,
                     isCreateMode = isCreateMode,
-                    onAction = viewModel::onAction,
+                    onAction = onAction,
                     modifier = Modifier.padding(paddingValues)
                 )
             }
@@ -115,10 +137,66 @@ fun EditProfileScreen(
                 EditProfileContentExpanded(
                     uiState = uiState,
                     isCreateMode = isCreateMode,
-                    onAction = viewModel::onAction,
+                    onAction = onAction,
                     modifier = Modifier.padding(paddingValues)
                 )
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun EditProfileScreenPreview() {
+    ProfileAppTheme {
+        EditProfileScreenContent(
+            uiState = PreviewData.sampleEditProfileUiState,
+            isCreateMode = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onAction = {},
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(name = "Create Mode", showBackground = true)
+@Composable
+private fun EditProfileScreenCreateModePreview() {
+    ProfileAppTheme {
+        EditProfileScreenContent(
+            uiState = EditProfileUiState(),
+            isCreateMode = true,
+            windowSize = WindowWidthSizeClass.Compact,
+            onAction = {},
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(name = "Loading", showBackground = true)
+@Composable
+private fun EditProfileScreenLoadingPreview() {
+    ProfileAppTheme {
+        EditProfileScreenContent(
+            uiState = PreviewData.sampleEditProfileUiStateLoading,
+            isCreateMode = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onAction = {},
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(name = "Validation Errors", showBackground = true)
+@Composable
+private fun EditProfileScreenValidationErrorsPreview() {
+    ProfileAppTheme {
+        EditProfileScreenContent(
+            uiState = PreviewData.sampleEditProfileUiStateWithErrors,
+            isCreateMode = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onAction = {},
+            onNavigateBack = {}
+        )
     }
 }

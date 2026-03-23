@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,10 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @Composable
 fun AvatarSection(
@@ -68,5 +72,31 @@ fun AvatarSection(
                 .padding(top = 8.dp)
                 .clickable { onAvatarClick() }
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun AvatarSectionPreview() {
+    ProfileAppTheme {
+        Surface {
+            AvatarSection(
+                avatarUri = "",
+                onAvatarClick = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "With Avatar URL", showBackground = true)
+@Composable
+private fun AvatarSectionWithImagePreview() {
+    ProfileAppTheme {
+        Surface {
+            AvatarSection(
+                avatarUri = "https://randomuser.me/api/portraits/men/1.jpg",
+                onAvatarClick = {}
+            )
+        }
     }
 }

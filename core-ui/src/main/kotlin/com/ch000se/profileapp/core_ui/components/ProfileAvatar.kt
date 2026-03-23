@@ -15,6 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
@@ -51,5 +55,44 @@ fun ProfileAvatar(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+    }
+}
+
+private class AvatarSizeProvider : PreviewParameterProvider<Int> {
+    override val values = sequenceOf(80, 120, 180)
+}
+
+@PreviewLightDark
+@Composable
+private fun ProfileAvatarPlaceholderPreview() {
+    MaterialTheme {
+        ProfileAvatar(
+            avatarUri = "",
+            size = 120
+        )
+    }
+}
+
+@Preview(name = "Different Sizes")
+@Composable
+private fun ProfileAvatarSizesPreview(
+    @PreviewParameter(AvatarSizeProvider::class) size: Int
+) {
+    MaterialTheme {
+        ProfileAvatar(
+            avatarUri = "",
+            size = size
+        )
+    }
+}
+
+@Preview(name = "With Avatar URL", showBackground = true)
+@Composable
+private fun ProfileAvatarWithImagePreview() {
+    MaterialTheme {
+        ProfileAvatar(
+            avatarUri = "https://randomuser.me/api/portraits/men/1.jpg",
+            size = 120
+        )
     }
 }

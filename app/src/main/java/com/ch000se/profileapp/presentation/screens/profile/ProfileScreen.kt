@@ -28,13 +28,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.domain.model.User
+import com.ch000se.profileapp.presentation.preview.PreviewData
 import com.ch000se.profileapp.presentation.screens.profile.components.ProfileContent
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,9 +67,35 @@ fun ProfileScreen(
         onStopOrDispose {}
     }
 
-    if (uiState.showLogoutDialog) {
+    ProfileScreenContent(
+        user = uiState.user,
+        isLoading = uiState.isLoading,
+        showLogoutDialog = uiState.showLogoutDialog,
+        windowSize = windowSize,
+        onEditClick = onNavigateToEdit,
+        onBackClick = onNavigateBack,
+        onLogoutClick = { viewModel.onAction(ProfileUiAction.ShowLogoutDialog) },
+        onConfirmLogout = { viewModel.onAction(ProfileUiAction.ConfirmLogout) },
+        onDismissLogout = { viewModel.onAction(ProfileUiAction.DismissLogoutDialog) }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ProfileScreenContent(
+    user: User?,
+    isLoading: Boolean,
+    showLogoutDialog: Boolean,
+    windowSize: WindowWidthSizeClass,
+    onEditClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onLogoutClick: () -> Unit,
+    onConfirmLogout: () -> Unit,
+    onDismissLogout: () -> Unit
+) {
+    if (showLogoutDialog) {
         AlertDialog(
-            onDismissRequest = { viewModel.onAction(ProfileUiAction.DismissLogoutDialog) },
+            onDismissRequest = onDismissLogout,
             icon = {
                 Icon(
                     modifier = Modifier.size(48.dp),
@@ -76,7 +107,7 @@ fun ProfileScreen(
             title = { Text(stringResource(R.string.logout_confirmation_title)) },
             text = { Text(stringResource(R.string.logout_confirmation_message)) },
             confirmButton = {
-                TextButton(onClick = { viewModel.onAction(ProfileUiAction.ConfirmLogout) }) {
+                TextButton(onClick = onConfirmLogout) {
                     Text(
                         text = stringResource(R.string.confirm),
                         color = MaterialTheme.colorScheme.error
@@ -84,7 +115,7 @@ fun ProfileScreen(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { viewModel.onAction(ProfileUiAction.DismissLogoutDialog) }) {
+                TextButton(onClick = onDismissLogout) {
                     Text(stringResource(R.string.cancel))
                 }
             }
@@ -96,7 +127,7 @@ fun ProfileScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.profile_title)) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back)
@@ -104,7 +135,7 @@ fun ProfileScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.onAction(ProfileUiAction.ShowLogoutDialog) }) {
+                    IconButton(onClick = onLogoutClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                             contentDescription = stringResource(R.string.logout)
@@ -119,7 +150,7 @@ fun ProfileScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onNavigateToEdit,
+                onClick = onEditClick,
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
@@ -136,16 +167,15 @@ fun ProfileScreen(
                 .padding(paddingValues)
         ) {
             when {
-                uiState.isLoading -> {
+                isLoading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
-
                 else -> {
-                    uiState.user?.let { user ->
+                    user?.let {
                         ProfileContent(
-                            user = user,
+                            user = it,
                             windowSize = windowSize
                         )
                     } ?: Text(
@@ -155,5 +185,77 @@ fun ProfileScreen(
                 }
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ProfileScreenPreview() {
+    ProfileAppTheme {
+        ProfileScreenContent(
+            user = PreviewData.sampleUser,
+            isLoading = false,
+            showLogoutDialog = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onEditClick = {},
+            onBackClick = {},
+            onLogoutClick = {},
+            onConfirmLogout = {},
+            onDismissLogout = {}
+        )
+    }
+}
+
+@Preview(name = "Loading", showBackground = true)
+@Composable
+private fun ProfileScreenLoadingPreview() {
+    ProfileAppTheme {
+        ProfileScreenContent(
+            user = null,
+            isLoading = true,
+            showLogoutDialog = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onEditClick = {},
+            onBackClick = {},
+            onLogoutClick = {},
+            onConfirmLogout = {},
+            onDismissLogout = {}
+        )
+    }
+}
+
+@Preview(name = "Logout Dialog", showBackground = true)
+@Composable
+private fun ProfileScreenLogoutDialogPreview() {
+    ProfileAppTheme {
+        ProfileScreenContent(
+            user = PreviewData.sampleUser,
+            isLoading = false,
+            showLogoutDialog = true,
+            windowSize = WindowWidthSizeClass.Compact,
+            onEditClick = {},
+            onBackClick = {},
+            onLogoutClick = {},
+            onConfirmLogout = {},
+            onDismissLogout = {}
+        )
+    }
+}
+
+@Preview(name = "Not Found", showBackground = true)
+@Composable
+private fun ProfileScreenNotFoundPreview() {
+    ProfileAppTheme {
+        ProfileScreenContent(
+            user = null,
+            isLoading = false,
+            showLogoutDialog = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onEditClick = {},
+            onBackClick = {},
+            onLogoutClick = {},
+            onConfirmLogout = {},
+            onDismissLogout = {}
+        )
     }
 }

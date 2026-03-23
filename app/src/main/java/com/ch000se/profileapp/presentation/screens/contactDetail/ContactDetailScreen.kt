@@ -21,10 +21,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.domain.model.Contact
+import com.ch000se.profileapp.presentation.preview.PreviewData
 import com.ch000se.profileapp.presentation.screens.contactDetail.component.ContactDetailContent
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +45,22 @@ fun ContactDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    ContactDetailScreenContent(
+        contact = uiState.contact,
+        isLoading = uiState.isLoading,
+        windowSize = windowSize,
+        onNavigateBack = onNavigateBack
+    )
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ContactDetailScreenContent(
+    contact: Contact?,
+    isLoading: Boolean,
+    windowSize: WindowWidthSizeClass,
+    onNavigateBack: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -66,16 +86,16 @@ fun ContactDetailScreen(
                 .padding(paddingValues)
         ) {
             when {
-                uiState.isLoading -> {
+                isLoading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
                 else -> {
-                    uiState.contact?.let { contact ->
+                    contact?.let {
                         ContactDetailContent(
-                            contact = contact,
+                            contact = it,
                             windowSize = windowSize,
                         )
                     } ?: Text(
@@ -85,6 +105,45 @@ fun ContactDetailScreen(
                 }
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ContactDetailScreenPreview() {
+    ProfileAppTheme {
+        ContactDetailScreenContent(
+            contact = PreviewData.sampleContact,
+            isLoading = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(name = "Loading", showBackground = true)
+@Composable
+private fun ContactDetailScreenLoadingPreview() {
+    ProfileAppTheme {
+        ContactDetailScreenContent(
+            contact = null,
+            isLoading = true,
+            windowSize = WindowWidthSizeClass.Compact,
+            onNavigateBack = {}
+        )
+    }
+}
+
+@Preview(name = "Not Found", showBackground = true)
+@Composable
+private fun ContactDetailScreenNotFoundPreview() {
+    ProfileAppTheme {
+        ContactDetailScreenContent(
+            contact = null,
+            isLoading = false,
+            windowSize = WindowWidthSizeClass.Compact,
+            onNavigateBack = {}
+        )
     }
 }
 

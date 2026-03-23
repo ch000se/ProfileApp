@@ -30,12 +30,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.core.error.NetworkError
 import com.ch000se.profileapp.presentation.common.mapper.asString
+import com.ch000se.profileapp.presentation.preview.PreviewData
 import com.ch000se.profileapp.presentation.screens.addcontact.components.AddContactContent
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,6 +64,24 @@ fun AddContactScreen(
         }
     }
 
+    AddContactScreenContent(
+        uiState = uiState,
+        windowSize = windowSize,
+        snackbarHostState = snackbarHostState,
+        onNavigateBack = onNavigateBack,
+        onAction = viewModel::onAction
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AddContactScreenContent(
+    uiState: AddContactUiState,
+    windowSize: WindowWidthSizeClass,
+    snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
+    onAction: (AddContactUiAction) -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -73,7 +96,7 @@ fun AddContactScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { viewModel.onAction(AddContactUiAction.RefreshUsers) },
+                        onClick = { onAction(AddContactUiAction.RefreshUsers) },
                         enabled = !uiState.isLoading
                     ) {
                         Icon(
@@ -113,7 +136,7 @@ fun AddContactScreen(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(
-                            onClick = { viewModel.onAction(AddContactUiAction.RefreshUsers) }
+                            onClick = { onAction(AddContactUiAction.RefreshUsers) }
                         ) {
                             Text(stringResource(R.string.retry))
                         }
@@ -123,11 +146,73 @@ fun AddContactScreen(
                 else -> {
                     AddContactContent(
                         windowSize = windowSize,
-                        onAction = viewModel::onAction,
+                        onAction = onAction,
                         uiState = uiState
                     )
                 }
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun AddContactScreenPreview() {
+    ProfileAppTheme {
+        AddContactScreenContent(
+            uiState = PreviewData.sampleAddContactUiStateWithSelection,
+            windowSize = WindowWidthSizeClass.Compact,
+            snackbarHostState = SnackbarHostState(),
+            onNavigateBack = {},
+            onAction = {}
+        )
+    }
+}
+
+@Preview(name = "Loading", showBackground = true)
+@Composable
+private fun AddContactScreenLoadingPreview() {
+    ProfileAppTheme {
+        AddContactScreenContent(
+            uiState = AddContactUiState(isLoading = true),
+            windowSize = WindowWidthSizeClass.Compact,
+            snackbarHostState = SnackbarHostState(),
+            onNavigateBack = {},
+            onAction = {}
+        )
+    }
+}
+
+@Preview(name = "Error", showBackground = true)
+@Composable
+private fun AddContactScreenErrorPreview() {
+    ProfileAppTheme {
+        AddContactScreenContent(
+            uiState = AddContactUiState(
+                isLoading = false,
+                error = NetworkError.NO_INTERNET
+            ),
+            windowSize = WindowWidthSizeClass.Compact,
+            snackbarHostState = SnackbarHostState(),
+            onNavigateBack = {},
+            onAction = {}
+        )
+    }
+}
+
+@Preview(name = "Saving", showBackground = true)
+@Composable
+private fun AddContactScreenSavingPreview() {
+    ProfileAppTheme {
+        AddContactScreenContent(
+            uiState = PreviewData.sampleAddContactUiStateWithSelection.copy(
+                isSaving = true,
+                isButtonEnabled = false
+            ),
+            windowSize = WindowWidthSizeClass.Compact,
+            snackbarHostState = SnackbarHostState(),
+            onNavigateBack = {},
+            onAction = {}
+        )
     }
 }

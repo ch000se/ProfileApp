@@ -23,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,11 +32,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.ch000se.profileapp.R
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
+import com.ch000se.profileapp.presentation.preview.ContactPreviewProvider
+import com.ch000se.profileapp.presentation.preview.PreviewData
+import com.ch000se.profileapp.ui.theme.ProfileAppTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -142,5 +149,58 @@ private fun CategoryChip(category: ContactCategory) {
             style = MaterialTheme.typography.labelSmall,
             color = textColor
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ContactItemPreview() {
+    ProfileAppTheme {
+        Surface {
+            ContactItem(
+                contact = PreviewData.sampleContactWithAllCategories,
+                onClick = {},
+                onDelete = {},
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+}
+
+@Preview(name = "Contact Variants")
+@Composable
+private fun ContactItemVariantsPreview(
+    @PreviewParameter(ContactPreviewProvider::class) contact: Contact
+) {
+    ProfileAppTheme {
+        Surface {
+            ContactItem(
+                contact = contact,
+                onClick = {},
+                onDelete = {},
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+}
+
+@Preview(name = "Contact List", showBackground = true)
+@Composable
+private fun ContactItemListPreview() {
+    ProfileAppTheme {
+        Surface {
+            Column(
+                modifier = Modifier.padding(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                PreviewData.sampleContactsList.forEach { contact ->
+                    ContactItem(
+                        contact = contact,
+                        onClick = {},
+                        onDelete = {}
+                    )
+                }
+            }
+        }
     }
 }

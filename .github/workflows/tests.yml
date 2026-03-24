@@ -1,0 +1,67 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, feature/unit-tests ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    name: Unit & Screenshot Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permissions for gradlew
+        run: chmod +x gradlew
+
+      - name: Run all unit tests with screenshot verification
+        run: ./gradlew test -Proborazzi.test.verify=true --continue
+
+      - name: Generate screenshot comparison on failure
+        if: failure()
+        run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true --rerun-tasks
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: '**/build/test-results/*/'
+          retention-days: 7
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-reports
+          path: '**/build/reports/tests/'
+          retention-days: 7
+
+      - name: Upload screenshot diff
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshot-diff
+          path: |
+            app/build/outputs/roborazzi/
+            app/build/intermediates/roborazzi/
+          retention-days: 7
+
+      - name: Upload Roborazzi report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: roborazzi-report
+          path: 'app/build/reports/roborazzi/'
+          retention-days: 7

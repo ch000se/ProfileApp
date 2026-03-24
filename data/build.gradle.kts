@@ -8,13 +8,17 @@ plugins {
 }
 
 private val keyStorePropertiesFile = rootProject.file("keystore.properties")
-private val keyStoreProperties = keyStorePropertiesFile.inputStream().use { inputStream ->
-    Properties().apply {
-        load(inputStream)
+private val keyStoreProperties = if (keyStorePropertiesFile.exists()) {
+    keyStorePropertiesFile.inputStream().use { inputStream ->
+        Properties().apply {
+            load(inputStream)
+        }
     }
+} else {
+    Properties()
 }
 
-private val apiKey = keyStoreProperties.getProperty("API_KEY")
+private val apiKey = keyStoreProperties.getProperty("API_KEY") ?: "\"\""
 
 android {
     namespace = "com.ch000se.profileapp.data"

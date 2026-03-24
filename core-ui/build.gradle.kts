@@ -27,13 +27,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-        }
-    }
     buildFeatures {
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 }
 
@@ -56,4 +57,10 @@ dependencies {
 
     api(libs.coil.compose)
     api(libs.coil.network.okhttp)
+
+    api(libs.junit)
+    api(libs.robolectric)
+    api(libs.roborazzi)
+    api(libs.roborazzi.compose)
+    api(libs.androidx.compose.ui.test.junit4)
 }

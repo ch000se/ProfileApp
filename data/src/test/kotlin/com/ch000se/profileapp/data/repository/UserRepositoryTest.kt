@@ -154,7 +154,7 @@ class UserRepositoryTest {
 
     private fun createUserEntity(
         name: String = "Andriy",
-        surname: String = "Bondarenko",
+        surname: String = "Bondar",
         phone: String = "+380931234567",
         email: String = "andriy.bondarenko@gmail.com",
         dateOfBirthday: String = "1988-11-28",
@@ -171,7 +171,7 @@ class UserRepositoryTest {
 
     private fun createUser(
         name: String = "Andriy",
-        surname: String = "Bondarenko",
+        surname: String = "Bondar",
         phone: String = "+380931234567",
         email: String = "andriy.bondarenko@gmail.com",
         dateOfBirthday: String = "1988-11-28",

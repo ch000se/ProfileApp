@@ -26,10 +26,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run unit tests
-        run: ./gradlew test --info --continue
+        run: ./gradlew test --continue
 
-      - name: Upload test reports (on failure)
-        if: failure()
+      - name: Upload test reports
         uses: actions/upload-artifact@v4
         with:
           name: test-reports

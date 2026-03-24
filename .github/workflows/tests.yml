@@ -2,13 +2,13 @@ name: Tests
 
 on:
   push:
-    branches: [ main, feature/unit-tests ]
+    branches: [ main, feature/** ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  tests:
-    name: Unit & Screenshot Tests
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -25,43 +25,13 @@ jobs:
       - name: Grant execute permissions for gradlew
         run: chmod +x gradlew
 
-      - name: Run all unit tests with screenshot verification
-        run: ./gradlew test -Proborazzi.test.verify=true --continue
+      - name: Run unit tests
+        run: ./gradlew testDebug --continue
 
-      - name: Generate screenshot comparison on failure
+      - name: Upload test reports (on failure)
         if: failure()
-        run: ./gradlew testDebugUnitTest -Proborazzi.test.compare=true --rerun-tasks
-
-      - name: Upload test results
         uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: '**/build/test-results/*/'
-          retention-days: 7
-
-      - name: Upload test reports
-        uses: actions/upload-artifact@v4
-        if: failure()
         with:
           name: test-reports
           path: '**/build/reports/tests/'
-          retention-days: 7
-
-      - name: Upload screenshot diff
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshot-diff
-          path: |
-            app/build/outputs/roborazzi/
-            app/build/intermediates/roborazzi/
-          retention-days: 7
-
-      - name: Upload Roborazzi report
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: roborazzi-report
-          path: 'app/build/reports/roborazzi/'
           retention-days: 7

@@ -87,7 +87,7 @@ class ProfileScreenTest : AbstractComposableTest() {
     @Test
     fun `GIVEN user loaded WHEN screen displayed THEN shows user information`() = runTest {
         val expectedName = "Oleksandr"
-        val expectedSurname = "Kovalenko"
+        val expectedSurname = "Koval"
         val user = createUser(name = expectedName, surname = expectedSurname)
 
         setContent {

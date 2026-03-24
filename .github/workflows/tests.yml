@@ -26,7 +26,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run unit tests
-        run: ./gradlew test --continue
+        run: ./gradlew test --info --stacktrace --continue
 
       - name: Upload test reports (on failure)
         if: failure()

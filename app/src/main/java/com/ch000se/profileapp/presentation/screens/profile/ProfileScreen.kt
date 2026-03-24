@@ -82,7 +82,7 @@ fun ProfileScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ProfileScreenContent(
+internal fun ProfileScreenContent(
     user: User?,
     isLoading: Boolean,
     showLogoutDialog: Boolean,

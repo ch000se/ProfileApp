@@ -75,7 +75,7 @@ fun AddContactScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AddContactScreenContent(
+internal fun AddContactScreenContent(
     uiState: AddContactUiState,
     windowSize: WindowWidthSizeClass,
     snackbarHostState: SnackbarHostState,

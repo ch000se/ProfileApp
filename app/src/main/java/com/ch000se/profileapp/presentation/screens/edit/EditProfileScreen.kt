@@ -88,7 +88,7 @@ fun EditProfileScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EditProfileScreenContent(
+internal fun EditProfileScreenContent(
     uiState: EditProfileUiState,
     isCreateMode: Boolean,
     windowSize: WindowWidthSizeClass,

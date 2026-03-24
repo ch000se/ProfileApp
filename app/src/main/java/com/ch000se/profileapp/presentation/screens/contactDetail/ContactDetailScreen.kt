@@ -55,7 +55,7 @@ fun ContactDetailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ContactDetailScreenContent(
+internal fun ContactDetailScreenContent(
     contact: Contact?,
     isLoading: Boolean,
     windowSize: WindowWidthSizeClass,

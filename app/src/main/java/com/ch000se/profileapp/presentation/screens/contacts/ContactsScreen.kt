@@ -93,7 +93,7 @@ fun ContactsScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ContactsScreenContent(
+internal fun ContactsScreenContent(
     uiState: ContactsUiState,
     onNavigateToAddContact: () -> Unit,
     onNavigateToContactDetail: (String) -> Unit,

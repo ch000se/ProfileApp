@@ -14,6 +14,10 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    testFixtures {
+        enable = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -24,8 +28,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         compose = true
@@ -34,7 +38,7 @@ android {
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
@@ -58,9 +62,18 @@ dependencies {
     api(libs.coil.compose)
     api(libs.coil.network.okhttp)
 
-    api(libs.junit)
-    api(libs.robolectric)
-    api(libs.roborazzi)
-    api(libs.roborazzi.compose)
-    api(libs.androidx.compose.ui.test.junit4)
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.compose.ui)
+    testFixturesImplementation(libs.androidx.compose.material3)
+    testFixturesApi(libs.junit)
+    testFixturesApi(libs.robolectric)
+    testFixturesApi(libs.roborazzi)
+    testFixturesApi(libs.roborazzi.compose)
+    testFixturesApi(libs.androidx.compose.ui.test.junit4)
+
+    testFixturesImplementation(projects.core)
+    testFixturesApi(libs.junit5.api)
+    testFixturesApi(libs.kotlinx.coroutines.test)
+    testFixturesApi(libs.mockk)
+    testFixturesApi(libs.turbine)
 }

@@ -2,6 +2,7 @@ package com.ch000se.profileapp.presentation.screens.contactDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ch000se.profileapp.core.coroutines.AppDispatchers
 import com.ch000se.profileapp.core.mvi.MVI
 import com.ch000se.profileapp.core.mvi.mvi
 import com.ch000se.profileapp.domain.usecases.GetContactByIdUseCase
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = ContactDetailViewModel.Factory::class)
 class ContactDetailViewModel @AssistedInject constructor(
     private val getContactByIdUseCase: GetContactByIdUseCase,
+    private val dispatchers: AppDispatchers,
     @Assisted("contactId") private val contactId: String
 ) : ViewModel(), MVI<ContactDetailUiState, ContactDetailUiAction, Nothing> by mvi(
     ContactDetailUiState()
@@ -29,7 +31,7 @@ class ContactDetailViewModel @AssistedInject constructor(
     }
 
     private fun loadUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isLoading = true, error = null) }
             try {
                 val user = getContactByIdUseCase(contactId)

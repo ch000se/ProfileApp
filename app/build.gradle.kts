@@ -81,7 +81,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.window.size.class1)
 
-    // Test dependencies from core-ui
+    // Test dependencies
+    testImplementation(testFixtures(projects.core))
     testImplementation(testFixtures(projects.coreUi))
     testImplementation(libs.mockk)
 

@@ -3,14 +3,15 @@ package com.ch000se.profileapp.presentation.screens.contacts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.core.coroutines.AppDispatchers
 import com.ch000se.profileapp.core.mvi.MVI
 import com.ch000se.profileapp.core.mvi.mvi
-import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
 import com.ch000se.profileapp.core_ui.model.UiText
 import com.ch000se.profileapp.core_ui.mvi.onStart
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.domain.usecases.DeleteContactUseCase
 import com.ch000se.profileapp.domain.usecases.SearchContactsUseCase
+import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
     private val searchContactsUseCase: SearchContactsUseCase,
-    private val deleteContactUseCase: DeleteContactUseCase
+    private val deleteContactUseCase: DeleteContactUseCase,
+    private val dispatchers: AppDispatchers
 ) : ViewModel(),
     MVI<ContactsUiState, ContactsUiAction, Nothing> by mvi(ContactsUiState(categoryFilters = initialCategories)) {
 
@@ -70,7 +72,7 @@ class ContactsViewModel @Inject constructor(
     }
 
     private fun loadContacts() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             fetchContacts(query.value)
         }
     }
@@ -107,12 +109,12 @@ class ContactsViewModel @Inject constructor(
             copy(categoryFilters = updatedFilters)
         }
 
-        viewModelScope.launch { fetchContacts(query.value) }
+        viewModelScope.launch(dispatchers.mainImmediate) { fetchContacts(query.value) }
     }
 
 
     private fun deleteContact(contactId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isDeleting = true) }
             try {
                 deleteContactUseCase(contactId)

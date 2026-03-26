@@ -2,9 +2,9 @@ package com.ch000se.profileapp.presentation.screens.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ch000se.profileapp.core.coroutines.AppDispatchers
 import com.ch000se.profileapp.core.mvi.MVI
 import com.ch000se.profileapp.core.mvi.mvi
-import com.ch000se.profileapp.core_ui.mvi.emitSideEffect
 import com.ch000se.profileapp.domain.usecases.GetUserUseCase
 import com.ch000se.profileapp.domain.usecases.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
+    private val dispatchers: AppDispatchers
 ) : ViewModel(), MVI<ProfileUiState, ProfileUiAction, ProfileUiEvent> by mvi(ProfileUiState()) {
 
     override fun onAction(action: ProfileUiAction) {
@@ -27,7 +28,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isLoading = true, error = null) }
             try {
                 val user = getUserUseCase()
@@ -39,7 +40,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun logout() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isLoading = true) }
             try {
                 logoutUseCase()

@@ -3,17 +3,17 @@ package com.ch000se.profileapp.presentation.screens.addcontact
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch000se.profileapp.R
+import com.ch000se.profileapp.core.coroutines.AppDispatchers
 import com.ch000se.profileapp.core.mvi.MVI
 import com.ch000se.profileapp.core.mvi.mvi
-import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
 import com.ch000se.profileapp.core_ui.model.UiText
-import com.ch000se.profileapp.core_ui.mvi.emitSideEffect
 import com.ch000se.profileapp.core_ui.mvi.onStart
 import com.ch000se.profileapp.data.mapper.toNetworkError
 import com.ch000se.profileapp.domain.model.Contact
 import com.ch000se.profileapp.domain.model.ContactCategory
 import com.ch000se.profileapp.domain.usecases.AddContactUseCase
 import com.ch000se.profileapp.domain.usecases.GetRandomUsersUseCase
+import com.ch000se.profileapp.presentation.common.model.CategoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +24,7 @@ private const val PAGE_SIZE = 20
 class AddContactViewModel @Inject constructor(
     private val getRandomUsersUseCase: GetRandomUsersUseCase,
     private val addContactUseCase: AddContactUseCase,
+    private val dispatchers: AppDispatchers
 ) : ViewModel(),
     MVI<AddContactUiState, AddContactUiAction, AddContactSideEffect> by mvi(
         AddContactUiState(categories = initialCategories)
@@ -60,7 +61,7 @@ class AddContactViewModel @Inject constructor(
     }
 
     private fun loadRandomUsers() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isLoading = true, error = null, randomUsers = emptyList()) }
             getRandomUsersUseCase(PAGE_SIZE)
                 .onSuccess { users ->
@@ -82,7 +83,7 @@ class AddContactViewModel @Inject constructor(
 
         updateUiState { copy(isLoadingMore = true) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             getRandomUsersUseCase(PAGE_SIZE)
                 .onSuccess { newUsers ->
                     updateUiState {
@@ -148,7 +149,7 @@ class AddContactViewModel @Inject constructor(
 
         if (selectedCategories.isEmpty()) return
 
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isSaving = true, isButtonEnabled = false) }
 
             try {

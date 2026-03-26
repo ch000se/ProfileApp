@@ -2,6 +2,7 @@ package com.ch000se.profileapp.presentation.screens.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ch000se.profileapp.core.coroutines.AppDispatchers
 import com.ch000se.profileapp.core.mvi.MVI
 import com.ch000se.profileapp.core.mvi.mvi
 import com.ch000se.profileapp.core_ui.mvi.emitSideEffect
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class EditProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val saveUserUseCase: SaveUserUseCase,
-    private val userValidator: UserValidator
+    private val userValidator: UserValidator,
+    private val dispatchers: AppDispatchers
 ) : ViewModel(),
     MVI<EditProfileUiState, EditProfileUiAction, EditProfileSideEffect> by mvi(EditProfileUiState()) {
 
@@ -147,7 +149,7 @@ class EditProfileViewModel @Inject constructor(
     }
 
     private fun loadUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             getUserUseCase()?.let { user ->
                 updateUiState {
                     copy(
@@ -164,7 +166,7 @@ class EditProfileViewModel @Inject constructor(
     }
 
     private fun saveProfile() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.mainImmediate) {
             updateUiState { copy(isLoading = true, validationErrors = emptyMap()) }
 
             val user = with(uiState.value) {
